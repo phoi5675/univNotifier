@@ -1,7 +1,7 @@
 # univNotifier
 대학교 공지사항을 오후 9시에 메일로 발송하는 프로그램입니다.
 
-vnev 및 setup.py 가 존재해야 자매 폴더의 모듈을 import 가능합니다. 없을 경우 import error 발생하며, 자세한 내용은 Sources 의 모듈 관리 링크 참고
+venv 및 setup.py 가 존재해야 자매 폴더의 모듈을 import 가능합니다. 없을 경우 import error 발생하며, 자세한 내용은 Sources 의 모듈 관리 링크 참고
 
 
 현재는 항공대, 상명대 공지사항을 메일로 보내고 있습니다.
