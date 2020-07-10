@@ -32,6 +32,6 @@ vnev 및 setup.py 가 존재해야 자매 폴더의 모듈을 import 가능합�
 MIT License. For more information, see LICENSE.
 
 # Changelog
-- 2020. 7.10.
+- 20.07.10.
   - 항공대, 상명대 공지알리미에 쓰는 모듈 통합(modules 폴더 내의 파일)
   - cron 에서 ScrapMain.py 와 SendMail.py 각각 실행하는 방법에서 루트 폴더의 run.py 를 이용하여 공지알리미를 모두 한 번에 실행하게 변경
