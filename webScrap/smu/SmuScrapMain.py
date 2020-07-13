@@ -26,7 +26,7 @@ def main():
     # -------------------- 공지 검색 attribute / value 설정 -------------------- #
     # notiFinder attribute / value 설정
     notiFinder.setAttributeAndValue('class', 'board-thumb-wrap', 'notiList')
-    notiFinder.setAttributeAndValue('', 'dl', 'notiLine')
+    notiFinder.setAttributeAndValue('class', 'board-thumb-content-wrap', 'notiLine')
     notiFinder.setAttributeAndValue('class', 'board-thumb-content-title', 'title')
     notiFinder.setAttributeAndValue('class', 'board-thumb-content-date', 'date')
     notiFinder.setAttributeAndValue('', 'href', 'href')
