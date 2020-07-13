@@ -41,7 +41,7 @@ class NotiFinder:
 
     def findAllWrappedNotiLine(self, scrapedHtml):
         found = scrapedHtml.find(attrs={self.notiListWrapperAttribute: self.notiListWrapperValue})
-        return found.find_all(self.notiLineWrapperValue)
+        return found.find_all(attrs={self.notiLineWrapperAttribute: self.notiLineWrapperValue})
 
     def findTitleInString(self, wrappedNotiLine):
         try:
