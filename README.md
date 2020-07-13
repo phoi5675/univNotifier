@@ -40,3 +40,5 @@ MIT License. For more information, see LICENSE.
   - run.py 에서 try except 문을 학교 별로 나누고, except 문에서는 오류를 log.txt 에 저장
   - NotiFinder 에서 findAllWrappedNotiLines 의 검색을 value 만 이용하는 방식에서 attr{key: value} 로 검색하는 방법으로 변경
   - 상명대의 공지 라인을 검색하는 키워드 변경
+  - 항공대의 취업 공지를 제외한 나머지 학교 및 학과 공지 라인의 검색 방식을 attr 검색 방식에서 tag 검색 방식으로 변경
+  - findAllWrappedNotiLine 에서 self.notiLineWrapperAttribute 가 'tag' 인 경우 find_all(attrs{key: value}) 방식이 아닌 find_all(tag) 방식을 이용할 수 있게 변경
