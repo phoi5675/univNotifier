@@ -36,3 +36,7 @@ MIT License. For more information, see LICENSE.
 - 20.07.10.
   - 항공대, 상명대 공지알리미에 쓰는 모듈 통합(modules 폴더 내의 파일)
   - cron 에서 ScrapMain.py 와 SendMail.py 각각 실행하는 방법에서 루트 폴더의 run.py 를 이용하여 공지알리미를 모두 한 번에 실행하게 변경
+- 20.07.13
+  - run.py 에서 try except 문을 학교 별로 나누고, except 문에서는 오류를 log.txt 에 저장
+  - NotiFinder 에서 findAllWrappedNotiLines 의 검색을 value 만 이용하는 방식에서 attr{key: value} 로 검색하는 방법으로 변경
+  - 상명대의 공지 라인을 검색하는 키워드 변경
