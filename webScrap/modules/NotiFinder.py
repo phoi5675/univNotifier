@@ -41,6 +41,9 @@ class NotiFinder:
 
     def findAllWrappedNotiLine(self, scrapedHtml):
         found = scrapedHtml.find(attrs={self.notiListWrapperAttribute: self.notiListWrapperValue})
+        if self.notiLineWrapperAttribute == 'tag':
+            return found.find_all(self.notiLineWrapperValue)  # 항공대처럼 attr 이 없는 경우
+
         return found.find_all(attrs={self.notiLineWrapperAttribute: self.notiLineWrapperValue})
 
     def findTitleInString(self, wrappedNotiLine):
