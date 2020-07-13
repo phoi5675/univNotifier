@@ -31,7 +31,7 @@ def main():
     # -------------------- 공지 검색 attribute / value 설정 -------------------- #
     # notiFinder attribute / value 설정
     notiFinder.setAttributeAndValue('class', 'board_list', 'notiList')
-    notiFinder.setAttributeAndValue('', 'tr', 'notiLine')
+    notiFinder.setAttributeAndValue('tag', 'tr', 'notiLine')
     notiFinder.setAttributeAndValue('headers', 'board_title', 'title')
     notiFinder.setAttributeAndValue('headers', 'board_create', 'date')
     notiFinder.setAttributeAndValue('', 'href', 'href')
