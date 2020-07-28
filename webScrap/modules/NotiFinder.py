@@ -58,7 +58,7 @@ class NotiFinder:
     def findDateInString(self, wrappedNotiLine):
         try:
             foundDateTag = wrappedNotiLine.find(attrs={self.dateAttribute: self.dateValue})
-            if foundDateTag.span:
+            if foundDateTag.span:  # 상명대의 경우 <span> 태그에 "작성일" 텍스트가 존재하므로 제거 필요
                 foundDateTag.span.clear()
 
             resultDate = foundDateTag.get_text()
