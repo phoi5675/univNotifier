@@ -31,6 +31,8 @@ def main():
     notiFinder.setAttributeAndValue('class', 'board-thumb-content-date', 'date')
     notiFinder.setAttributeAndValue('', 'href', 'href')
 
+    notiFinder.addRemoveTagKeywords('span', 'date')
+
     # -------------------- 공지 스크랩 -------------------- #
     # 일반 공지 스크랩
     webScrap(notiFinder, genNotiListAll, GENWEB, GENWEBDICT)
