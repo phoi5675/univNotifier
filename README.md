@@ -1,7 +1,7 @@
 # univNotifier
 대학교 공지사항을 오후 9시에 메일로 발송하는 프로그램입니다.
 
-venv 및 setup.py 가 존재해야 자매 폴더의 모듈을 import 가능합니다. 없을 경우 import error 발생하며, 자세한 내용은 Sources 의 모듈 관리 링크 참고
+venv 및 setup.py 가 존재해야 자매 폴더의 모듈 import 가능합니다. 없을 경우 import error 발생하며, 자세한 내용은 Sources 의 모듈 관리 링크 참고
 
 
 현재는 항공대, 상명대 공지사항을 메일로 보내고 있습니다.
@@ -42,3 +42,5 @@ MIT License. For more information, see LICENSE.
   - 상명대의 공지 라인을 검색하는 키워드 변경
   - 항공대의 취업 공지를 제외한 나머지 학교 및 학과 공지 라인의 검색 방식을 attr 검색 방식에서 tag 검색 방식으로 변경
   - findAllWrappedNotiLine 에서 self.notiLineWrapperAttribute 가 'tag' 인 경우 find_all(attrs{key: value}) 방식이 아닌 find_all(tag) 방식을 이용할 수 있게 변경
+- 20.08.12
+  - NotiFinder 클래스의 notiList, notiLine, date, title, href 의 html tag 검색에서 쓰이는 attribute, value 등 중복 변수를 NotiFinderElements 라는 클래스를 생성하여 제거
