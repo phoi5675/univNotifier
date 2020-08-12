@@ -5,70 +5,59 @@ from bs4 import BeautifulSoup
 from datetime import date
 
 
+class NotiFinderElements:
+    def __init__(self):
+        self.attrKeyword = ''
+        self.valueKeyword = ''
+        self.removeTagKeywords = []
+
+
 class NotiFinder:
     def __init__(self):
-        self.notiListWrapperAttribute = ''
-        self.notiListWrapperValue = ''
-
-        self.notiLineWrapperAttribute = ''
-        self.notiLineWrapperValue = ''
-
-        self.titleAttribute = ''
-        self.titleValue = ''
-
-        self.dateAttribute = ''
-        self.dateValue = ''
-
-        self.hrefAttribute = ''
-        self.hrefValue = ''
+        self.notiFinderElements = {
+            'notiList': NotiFinderElements(),
+            'notiLine': NotiFinderElements(),
+            'title': NotiFinderElements(),
+            'date': NotiFinderElements(),
+            'href': NotiFinderElements()
+        }
 
     def setAttributeAndValue(self, attribute, value, select: str):
-        if select == 'notiList':
-            self.notiListWrapperAttribute = attribute
-            self.notiListWrapperValue = value
-        elif select == 'notiLine':
-            self.notiLineWrapperAttribute = attribute
-            self.notiLineWrapperValue = value
-        elif select == 'title':
-            self.titleAttribute = attribute
-            self.titleValue = value
-        elif select == 'date':
-            self.dateAttribute = attribute
-            self.dateValue = value
-        elif select == 'href':
-            self.hrefAttribute = attribute
-            self.hrefValue = value
+        self.notiFinderElements[select].attrKeyword = attribute
+        self.notiFinderElements[select].valueKeyword = value
+
+    def addRemoveTagKeywords(self, removeTag, select: str):
+        self.notiFinderElements[select].removeTagKeywords.append(removeTag)
 
     def findAllWrappedNotiLine(self, scrapedHtml):
-        found = scrapedHtml.find(attrs={self.notiListWrapperAttribute: self.notiListWrapperValue})
-        if self.notiLineWrapperAttribute == 'tag':
-            return found.find_all(self.notiLineWrapperValue)  # 항공대처럼 attr 이 없는 경우
+        found = scrapedHtml.find(
+            attrs={self.notiFinderElements['notiList'].attrKeyword: self.notiFinderElements['notiList'].valueKeyword}
+        )
+        if self.notiFinderElements['notiLine'].attrKeyword == 'tag':
+            # 항공대처럼 attr 없이 tag 로만 게시물을 나눈 경우, tag 로 검색
+            return found.find_all(self.notiFinderElements['notiLine'].valueKeyword)
 
-        return found.find_all(attrs={self.notiLineWrapperAttribute: self.notiLineWrapperValue})
+        return found.find_all(
+            attrs={self.notiFinderElements['notiLine'].attrKeyword: self.notiFinderElements['notiLine'].valueKeyword}
+        )
 
-    def findTitleInString(self, wrappedNotiLine):
+    def findElements(self, wrappedNotiLine, select: str):
+        def deleteNotWantedTags(extractedTag):
+            for keywords in self.notiFinderElements[select].removeTagKeywords:
+                decomposedTag = extractedTag.find(keywords)
+                decomposedTag.decompose()
+
         try:
-            foundTitleTag = wrappedNotiLine.find(attrs={self.titleAttribute: self.titleValue})
+            if select == 'href':
+                return wrappedNotiLine.a.get(self.notiFinderElements[select].valueKeyword)
+            else:
+                found = wrappedNotiLine.find(
+                    attrs={self.notiFinderElements[select].attrKeyword: self.notiFinderElements[select].valueKeyword}
+                )
+                deleteNotWantedTags(found)
 
-            resultTitle = foundTitleTag.get_text()
-            return resultTitle
-        except AttributeError:
-            return ''
+                return found.get_text()
 
-    def findDateInString(self, wrappedNotiLine):
-        try:
-            foundDateTag = wrappedNotiLine.find(attrs={self.dateAttribute: self.dateValue})
-            if foundDateTag.span:  # 상명대의 경우 <span> 태그에 "작성일" 텍스트가 존재하므로 제거 필요
-                foundDateTag.span.clear()
-
-            resultDate = foundDateTag.get_text()
-            return resultDate
-        except AttributeError:
-            return ''
-
-    def findHrefInString(self, wrappedNotiLine):
-        try:
-            return wrappedNotiLine.a.get(self.hrefValue)
         except AttributeError:
             return ''
 
@@ -105,12 +94,12 @@ def webScrap(notiFinder, notiListAll, webPageList, categoryList):
         notiList.category = categoryList[webPage]
 
         for notiLine in notiLines:
-            date = notiFinder.findDateInString(notiLine)
+            date = notiFinder.findElements(notiLine, 'date')
 
             if NotiFinder.isToday(date):  # 오늘 날짜와 일치하는 공지만 추가
-                title = notiFinder.findTitleInString(notiLine)
+                title = notiFinder.findElements(notiLine, 'title')
                 # href 에는 게시물 id 만 포함
-                href = notiFinder.findHrefInString(notiLine)
+                href = notiFinder.findElements(notiLine, 'href')
 
                 notiList.extractedNotiList.append(ExtractedNoti(title, date, href))
                 notiList.numOfNoti = notiList.numOfNoti + 1
