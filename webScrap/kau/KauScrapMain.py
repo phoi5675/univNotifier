@@ -24,6 +24,10 @@ def main():
 
     notiFinder = NotiFinder()
 
+    # 소프트웨어 학과 공지도 따로 생성
+    softNotiListAll = list(ExtractedNotiList() for i in range(len(SOFT)))
+    softNotiFinder = NotiFinder()
+
     # 취업공지는 따로 생성 / 호환성을 위해 리스트로 생성
     careerNotiListAll = list(ExtractedNotiList() for i in range(len(CAREER)))
     notiFinderCareer = NotiFinder()
@@ -35,6 +39,13 @@ def main():
     notiFinder.setAttributeAndValue('headers', 'board_title', 'title')
     notiFinder.setAttributeAndValue('headers', 'board_create', 'date')
     notiFinder.setAttributeAndValue('', 'href', 'href')
+
+    # notiFinder for software attribute / value 설정
+    softNotiFinder.setAttributeAndValue('class', 'kboard-list', 'notiList')
+    softNotiFinder.setAttributeAndValue('tag', 'tr', 'notiLine')
+    softNotiFinder.setAttributeAndValue('class', 'kboard-avatar-cut-strings', 'title')
+    softNotiFinder.setAttributeAndValue('class', 'kboard-list-date', 'date')
+    softNotiFinder.setAttributeAndValue('', 'href', 'href')
 
     # notiFinder for career attribute / value 설정
     notiFinderCareer.setAttributeAndValue('class', 'black', 'notiList')
@@ -53,6 +64,9 @@ def main():
     # 학과 공지 스크랩
     webScrap(notiFinder, deptNotiListAll, DEPWEB, DEPWEBDICT)
 
+    # 소프트학과 공지 스크랩
+    webScrap(softNotiFinder, softNotiListAll, SOFT, DEPWEBDICT)
+
     # -------------------- href 수정 -------------------- #
     # href 수정
     # 취업 공지를 제외한 나머지 학교 / 학과 공지는 BoardId 값 따로 추출 필요
@@ -62,10 +76,14 @@ def main():
         addWebPageLinkToHrefList(deptNotiList, depWeb, True)
     # 취업 공지는 BoardId 값 추출 필요 없음
     addWebPageLinkToHrefList(careerNotiListAll[0], CAREERAPPEND[0], False)
+    # 소프트 공지도 BoardId 값 추출 필요 없음
+    addWebPageLinkToHrefList(softNotiListAll[0], SOFT[0], False)
 
     # -------------------- 별도 notiFinder 로 생성한 공지 append (optional) -------------------- #
     # 취업 공지를 일반 공지로 넘기기
     genNotiListAll.append(careerNotiListAll[0])
+    # 소프트 공지를 일반 공지로 넘기기
+    deptNotiListAll.append(softNotiListAll[0])
 
     # -------------------- html 인스턴스에 공지, 정보 태그 추가 및 파일 저장 -------------------- #
     # 받은 공지를 html 인스턴스로 넘기기
