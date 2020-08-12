@@ -63,8 +63,9 @@ class NotiFinder:
 
     @staticmethod
     def isToday(scrapDate):
+        convertedDate = scrapDate.replace('.', '-')  # . 으로 날짜 표시가 된 경우 변경 / 조금 더 좋은 방법은 나중에..
         today = date.today().isoformat()
-        if scrapDate == today:
+        if convertedDate == today:
             return True
         else:
             return False
