@@ -44,3 +44,5 @@ MIT License. For more information, see LICENSE.
   - findAllWrappedNotiLine 에서 self.notiLineWrapperAttribute 가 'tag' 인 경우 find_all(attrs{key: value}) 방식이 아닌 find_all(tag) 방식을 이용할 수 있게 변경
 - 20.08.12
   - NotiFinder 클래스의 notiList, notiLine, date, title, href 의 html tag 검색에서 쓰이는 attribute, value 등 중복 변수를 NotiFinderElements 라는 클래스를 생성하여 제거
+  - NotiFinder 클래스에서 비슷한 역할을 하는 find* 메서드를 하나로 통합
+  - 태그의 하위 태그가 여러 개 일 때, 이들을 제거 할 수 있는 메서드 추가
