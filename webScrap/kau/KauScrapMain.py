@@ -79,12 +79,38 @@ def main():
     # 소프트 공지도 BoardId 값 추출 필요 없음
     addWebPageLinkToHrefList(softNotiListAll[0], SOFT[0], False)
 
+    # -------------------- 공지 내용 미리보기 만들기 -------------------- #
+    genNotiPreviewFinder = NotiFinder()
+    genNotiPreviewFinder.setAttributeAndValue("colspan", "4", "notiLine")
+
+    deptNotiPreviewFinder = NotiFinder()
+    deptNotiPreviewFinder.setAttributeAndValue("colspan", "4", "notiLine")
+
+    careerNotiPreviewFinder = NotiFinder()
+    careerNotiPreviewFinder.setAttributeAndValue("data-role", "wysiwyg-content", "notiLine")
+
+    softNotiPreviewFinder = NotiFinder()
+    softNotiPreviewFinder.setAttributeAndValue("class", "content-view", "notiLine")
+
+    for notiList in genNotiListAll:
+        extractPreviewContextTagAsString(notiList, genNotiPreviewFinder)
+
+    for notiList in deptNotiListAll:
+        if notiList.category == "경영학부":  # 경영학부 공지 세부내용은 로그인 한 사용자만 볼 수 있으므로 접근 불가
+            continue
+        extractPreviewContextTagAsString(notiList, deptNotiPreviewFinder)
+
+    for notiList in careerNotiListAll:
+        extractPreviewContextTagAsString(notiList, careerNotiPreviewFinder)
+
+    for notiList in softNotiListAll:
+        extractPreviewContextTagAsString(notiList, softNotiPreviewFinder)
+
     # -------------------- 별도 notiFinder 로 생성한 공지 append (optional) -------------------- #
     # 취업 공지를 일반 공지로 넘기기
     genNotiListAll.append(careerNotiListAll[0])
     # 소프트 공지를 일반 공지로 넘기기
     deptNotiListAll.append(softNotiListAll[0])
-
     # -------------------- html 인스턴스에 공지, 정보 태그 추가 및 파일 저장 -------------------- #
     # 받은 공지를 html 인스턴스로 넘기기
     htmlBaseInString = HTMLBASE
