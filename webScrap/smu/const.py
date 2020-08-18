@@ -1,3 +1,5 @@
+# 학교 홈페이지
+HOMEPAGE = "https://www.smu.ac.kr"
 # 학교 공지
 GENERALNOTILINK = "https://www.smu.ac.kr/lounge/notice/notice.do"  # 전체공지 / 스크랩된 href 와 결합 시 사용
 
