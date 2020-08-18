@@ -48,6 +48,19 @@ def main():
     for deptNotiList, depWeb in zip(deptNotiListAll, DEPWEB):
         addWebPageLinkToHrefList(deptNotiList, depWeb, False)
 
+    # -------------------- 공지 내용 미리보기 만들기 -------------------- #
+    genNotiPreviewFinder = NotiFinder()
+    genNotiPreviewFinder.setAttributeAndValue("class", "board-view-content-wrap board-view-txt", "notiLine")
+
+    deptNotiPreviewFinder = NotiFinder()
+    deptNotiPreviewFinder.setAttributeAndValue("class", "board-view-content-wrap board-view-txt", "notiLine")
+
+    for notiList in genNotiListAll:
+        extractPreviewContextTagAsString(notiList, genNotiPreviewFinder, HOMEPAGE)
+
+    for notiList in deptNotiListAll:
+        extractPreviewContextTagAsString(notiList, deptNotiPreviewFinder, HOMEPAGE)
+
     # -------------------- html 인스턴스에 공지, 정보 태그 추가 및 파일 저장 -------------------- #
     # 받은 공지를 html 로 넘기기
     htmlBaseInString = HTMLBASE
