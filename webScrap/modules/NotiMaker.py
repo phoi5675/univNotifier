@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from bs4 import BeautifulSoup
+from .NotiFinder import NotiFinder
 
 
 def addWebPageLinkToHrefList(singleNotiList, webPage, isNeedToExtractHrefId: bool):
@@ -47,6 +48,11 @@ def addCategoryNotiToHtml(notiList, htmlBase):
         htmlBase.body.append(listTag)
 
     def addNotiLineToHtmlInUnorderedListTag(notiList, htmlBase):
+        def addDetailsTag(notiLine, categoryDivTag):
+            detailsTag = BeautifulSoup(notiLine.preview, 'lxml')
+
+            categoryDivTag.append(detailsTag.details)
+
         # notiList 는 학사, 취업 등 한 섹션의 공지를 담은 리스트
         categoryDivTag = htmlBase.find("ul", class_=notiList.category)
         for i in range(notiList.numOfNoti):
@@ -58,6 +64,9 @@ def addCategoryNotiToHtml(notiList, htmlBase):
             unorderedListTag.append(notiTag)
 
             categoryDivTag.append(unorderedListTag)
+
+            if notiList.extractedNotiList[i].preview != '':  # 미리보기 지원이 되지 않는 학과는 제외
+                addDetailsTag(notiList.extractedNotiList[i], categoryDivTag)
 
         addHrTag(categoryDivTag)
 
@@ -97,3 +106,38 @@ def isBodyTagContainsElements(html):
         return True
     else:
         return False
+
+
+def extractPreviewContextTagAsString(notiList, notiFinder, homepage=''):
+    def isContainsImage(html):
+        if html.find("img") is not None:
+            return True
+        else:
+            return False
+
+    def isNeedToFixImageLink(homepage):
+        if homepage != '':
+            return True
+        else:
+            return False
+
+    def fixImageLink(html, homepage):
+        imgTags = html.find_all('img')
+        for imgTag in imgTags:
+            imgTag['src'] = homepage + imgTag['src']
+
+    def insertInPreviewTag(contextTag):
+        detailsTag = BeautifulSoup("<details><summary>미리보기</summary></details>", "lxml")
+        detailsTag.details.append(contextTag)
+
+        return detailsTag.details
+
+    for i in range(notiList.numOfNoti):
+        scrapedHtml = NotiFinder.webToLxmlClass(notiList.extractedNotiList[i].href)
+
+        foundContextTag = notiFinder.findElements(scrapedHtml, 'notiLine', False)
+
+        if isContainsImage(foundContextTag) and isNeedToFixImageLink(homepage):
+            fixImageLink(foundContextTag, homepage)
+
+        notiList.extractedNotiList[i].preview = str(insertInPreviewTag(foundContextTag))
