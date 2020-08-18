@@ -41,7 +41,7 @@ class NotiFinder:
             attrs={self.notiFinderElements['notiLine'].attrKeyword: self.notiFinderElements['notiLine'].valueKeyword}
         )
 
-    def findElements(self, wrappedNotiLine, select: str):
+    def findElements(self, wrappedNotiLine, select: str, isReturnText=False):
         def deleteNotWantedTags(extractedTag):
             for keywords in self.notiFinderElements[select].removeTagKeywords:
                 decomposedTag = extractedTag.find(keywords)
@@ -55,8 +55,10 @@ class NotiFinder:
                     attrs={self.notiFinderElements[select].attrKeyword: self.notiFinderElements[select].valueKeyword}
                 )
                 deleteNotWantedTags(found)
-
-                return found.get_text()
+                if isReturnText:
+                    return found.get_text()
+                else:
+                    return found
 
         except AttributeError:
             return ''
@@ -95,12 +97,12 @@ def webScrap(notiFinder, notiListAll, webPageList, categoryList):
         notiList.category = categoryList[webPage]
 
         for notiLine in notiLines:
-            date = notiFinder.findElements(notiLine, 'date')
+            date = notiFinder.findElements(notiLine, 'date', True)
 
             if NotiFinder.isToday(date):  # 오늘 날짜와 일치하는 공지만 추가
-                title = notiFinder.findElements(notiLine, 'title')
+                title = notiFinder.findElements(notiLine, 'title', True)
                 # href 에는 게시물 id 만 포함
-                href = notiFinder.findElements(notiLine, 'href')
+                href = notiFinder.findElements(notiLine, 'href', True)
 
                 notiList.extractedNotiList.append(ExtractedNoti(title, date, href))
                 notiList.numOfNoti = notiList.numOfNoti + 1

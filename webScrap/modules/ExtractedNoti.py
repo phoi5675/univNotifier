@@ -3,6 +3,7 @@ class ExtractedNoti:
         self.title = title
         self.date = date
         self.href = href
+        self.preview = ''
 
 
 class ExtractedNotiList:
