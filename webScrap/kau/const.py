@@ -1,4 +1,5 @@
 BOARDID = "?search_boardId="
+HOMEPAGE = "https://kau.ac.kr"
 # 일반, 학사공지
 GENERAL = "http://kau.ac.kr/page/kauspace/general_list.jsp" + BOARDID  # 일반
 ACADEMIC = "http://kau.ac.kr/page/kauspace/academicinfo_list.jsp" + BOARDID  # 학사
