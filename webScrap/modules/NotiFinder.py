@@ -19,7 +19,9 @@ class NotiFinder:
             'notiLine': NotiFinderElements(),
             'title': NotiFinderElements(),
             'date': NotiFinderElements(),
-            'href': NotiFinderElements()
+            'href': NotiFinderElements(),
+            'preview': NotiFinderElements(),
+            'attachment': NotiFinderElements()
         }
 
     def setAttributeAndValue(self, attribute, value, select: str):
