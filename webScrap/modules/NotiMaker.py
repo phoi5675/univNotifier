@@ -148,4 +148,4 @@ def extractContentsInsideLink(notiList, notiFinder, homepage=''):
 
         extractPreviewContentsAsString(scrapedHtml, notiFinder, notiList)
 
-        extractPreviewContentsAsString(scrapedHtml, notiFinder, notiList)
+        extractAttachments(scrapedHtml, notiFinder, notiList)
