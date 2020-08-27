@@ -11,6 +11,7 @@ from NotiFinder import *
 from NotiMaker import *
 '''
 
+
 def main():
     # -------------------- 파일 삭제 -------------------- #
     # 이전에 만들어진 파일 삭제
@@ -49,17 +50,13 @@ def main():
         addWebPageLinkToHrefList(deptNotiList, depWeb, False)
 
     # -------------------- 공지 내용 미리보기 만들기 -------------------- #
-    genNotiPreviewFinder = NotiFinder()
-    genNotiPreviewFinder.setAttributeAndValue("class", "board-view-content-wrap board-view-txt", "notiLine")
-
-    deptNotiPreviewFinder = NotiFinder()
-    deptNotiPreviewFinder.setAttributeAndValue("class", "board-view-content-wrap board-view-txt", "notiLine")
+    notiFinder.setAttributeAndValue("class", "board-view-content-wrap board-view-txt", "preview")
 
     for notiList in genNotiListAll:
-        extractPreviewContextTagAsString(notiList, genNotiPreviewFinder, HOMEPAGE)
+        extractContentsInsideLink(notiList, notiFinder)
 
     for notiList in deptNotiListAll:
-        extractPreviewContextTagAsString(notiList, deptNotiPreviewFinder, HOMEPAGE)
+        extractContentsInsideLink(notiList, notiFinder)
 
     # -------------------- html 인스턴스에 공지, 정보 태그 추가 및 파일 저장 -------------------- #
     # 받은 공지를 html 로 넘기기

@@ -108,36 +108,44 @@ def isBodyTagContainsElements(html):
         return False
 
 
-def extractPreviewContextTagAsString(notiList, notiFinder, homepage=''):
-    def isContainsImage(html):
-        if html.find("img") is not None:
+def extractContentsInsideLink(notiList, notiFinder, homepage=''):
+    def isContains(html, element):
+        if html.find(element) is not None:
             return True
         else:
             return False
 
-    def isNeedToFixImageLink(homepage):
-        if homepage != '':
-            return True
-        else:
-            return False
+    def extractPreviewContentsAsString(scrapedHtml, notiFinder, notiList):
+        def isNeedToFixImageLink(homepage):
+            if homepage != '':
+                return True
+            else:
+                return False
 
-    def fixImageLink(html, homepage):
-        imgTags = html.find_all('img')
-        for imgTag in imgTags:
-            imgTag['src'] = homepage + imgTag['src']
+        def fixImageLink(html, homepage):
+            imgTags = html.find_all('img')
+            for imgTag in imgTags:
+                imgTag['src'] = homepage + imgTag['src']
 
-    def insertInPreviewTag(contextTag):
-        detailsTag = BeautifulSoup("<details><summary>미리보기</summary></details>", "lxml")
-        detailsTag.details.append(contextTag)
+        def insertInPreviewTag(contextTag):
+            detailsTag = BeautifulSoup("<details><summary>미리보기</summary></details>", "lxml")
+            detailsTag.details.append(contextTag)
 
-        return detailsTag.details
+            return detailsTag.details
+
+        foundContextTag = notiFinder.findElements(scrapedHtml, 'preview', False)
+
+        if isContains(foundContextTag, 'img') and isNeedToFixImageLink(homepage):
+            fixImageLink(foundContextTag, homepage)
+
+        notiList.extractedNotiList[i].preview = str(insertInPreviewTag(foundContextTag))
+
+    def extractAttachments(scrapedHtml, notiFinder, notiList):
+        pass
 
     for i in range(notiList.numOfNoti):
         scrapedHtml = NotiFinder.webToLxmlClass(notiList.extractedNotiList[i].href)
 
-        foundContextTag = notiFinder.findElements(scrapedHtml, 'notiLine', False)
+        extractPreviewContentsAsString(scrapedHtml, notiFinder, notiList)
 
-        if isContainsImage(foundContextTag) and isNeedToFixImageLink(homepage):
-            fixImageLink(foundContextTag, homepage)
-
-        notiList.extractedNotiList[i].preview = str(insertInPreviewTag(foundContextTag))
+        extractPreviewContentsAsString(scrapedHtml, notiFinder, notiList)
