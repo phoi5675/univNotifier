@@ -49,3 +49,8 @@ MIT License. For more information, see LICENSE.
   - 항공대학교 소프트웨어학과 지원
 - 20.08.18
   - 미리보기 기능 추가
+- 20.08.27
+  - NotiFinder class 에 preview, attachment 추가
+  - NotiMaker.extractPreviewContentsAsString 메서드를 extractContentsInsideLink 로 리팩터링 및 extractAttachments 추가
+  - extractAttachments 메서드는 추후 세부화 예정
+  - 기타 변수 이름 및 함수 이름 변경
