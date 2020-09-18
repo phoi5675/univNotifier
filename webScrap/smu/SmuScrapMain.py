@@ -53,10 +53,10 @@ def main():
     notiFinder.setAttributeAndValue("class", "board-view-content-wrap board-view-txt", "preview")
 
     for notiList in genNotiListAll:
-        extractContentsInsideLink(notiList, notiFinder)
+        extractContentsInsideLink(notiList, notiFinder, HOMEPAGE)
 
     for notiList in deptNotiListAll:
-        extractContentsInsideLink(notiList, notiFinder)
+        extractContentsInsideLink(notiList, notiFinder, HOMEPAGE)
 
     # -------------------- html 인스턴스에 공지, 정보 태그 추가 및 파일 저장 -------------------- #
     # 받은 공지를 html 로 넘기기
