@@ -3,7 +3,7 @@ if __name__ == '__main__':
         from datetime import date
         today = date.today().isoformat()
         print(error)
-        file = open('log.txt', 'a')
+        file = open('./log.txt', 'a')
 
         file.writelines(today + '    ' + repr(error) + '\n\n')
         file.close()
