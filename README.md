@@ -54,3 +54,5 @@ MIT License. For more information, see LICENSE.
   - NotiMaker.extractPreviewContentsAsString 메서드를 extractContentsInsideLink 로 리팩터링 및 extractAttachments 추가
   - extractAttachments 메서드는 추후 세부화 예정
   - 기타 변수 이름 및 함수 이름 변경
+- 20.09.22
+  - 구글 스프레드시트에서 시간 당 읽기 횟수 초과로 인해 메일 주소 읽기 및 발송 실패 오류 수정
