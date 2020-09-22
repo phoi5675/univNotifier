@@ -93,14 +93,17 @@ def getSpreadSheet(jsonWithFullPath, spreadsheetlink):
 
 
 def sendMailFromWorksheet(worksheet, htmlDict, mailTitle, categoryKey, smtp):
-    i = 2  # 셀의 데이터는 2행부터 시작
-    while worksheet.acell('A' + str(i)).value != '':
+    mailAddrList = worksheet.col_values(2)
+    majList = worksheet.col_values(3)
+    cancelSubscriptionList = worksheet.col_values(4)
+
+    i = 1  # 셀의 데이터는 2행부터 시작, list 라서 i 값은 1
+    while mailAddrList[i] != '':
         # 구독 취소 한 사람의 경우 루프 넘김
-        if worksheet.acell('d' + str(i)).value == 'O':
+        if cancelSubscriptionList[i] == 'O':
+            i = i + 1
             continue
-        mailAddr = worksheet.acell('b' + str(i)).value  # 메일 주소
-        maj = worksheet.acell('c' + str(i)).value  # 전공 분류
-        index = categoryKey[maj]
+        index = categoryKey[majList[i]]
 
         # 파일이 존재하는 학과만 공지 발송
         # 학교 공지가 없고, 학과 공지만 있을 때, 공지가 없는 학과가 생기는 경우
@@ -108,7 +111,8 @@ def sendMailFromWorksheet(worksheet, htmlDict, mailTitle, categoryKey, smtp):
         try:
             if htmlDict[index] != '':
                 # 메일 발송
-                send_mail(smtp, mailAddr, mailTitle, htmlDict[index])
+                send_mail(smtp, mailAddrList[i], mailTitle, htmlDict[index])
+                pass
         except KeyError:
             pass
         i += 1
