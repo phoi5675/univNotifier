@@ -108,7 +108,7 @@ def isBodyTagContainsElements(html):
         return False
 
 
-def extractContentsInsideLink(notiList, notiFinder, homepage=''):
+def extractContentsInsideLink(notiList, notiFinder):
     def isContains(html, element):
         if html.find(element) is not None:
             return True
@@ -135,8 +135,8 @@ def extractContentsInsideLink(notiList, notiFinder, homepage=''):
 
         foundContextTag = notiFinder.findElements(scrapedHtml, 'preview', False)
 
-        if isContains(foundContextTag, 'img') and isNeedToFixImageLink(homepage):
-            fixImageLink(foundContextTag, homepage)
+        if isContains(foundContextTag, 'img') and isNeedToFixImageLink(notiList.linkForFixImg):
+            fixImageLink(foundContextTag, notiList.linkForFixImg)
 
         notiList.extractedNotiList[i].preview = str(insertInPreviewTag(foundContextTag))
 
