@@ -98,7 +98,7 @@ def sendMailFromWorksheet(worksheet, htmlDict, mailTitle, categoryKey, smtp):
     cancelSubscriptionList = worksheet.col_values(4)
 
     i = 1  # 셀의 데이터는 2행부터 시작, list 라서 i 값은 1
-    while mailAddrList[i] != '':
+    while i < len(mailAddrList):
         # 구독 취소 한 사람의 경우 루프 넘김
         if cancelSubscriptionList[i] == 'O':
             i = i + 1
@@ -112,7 +112,8 @@ def sendMailFromWorksheet(worksheet, htmlDict, mailTitle, categoryKey, smtp):
             if htmlDict[index] != '':
                 # 메일 발송
                 send_mail(smtp, mailAddrList[i], mailTitle, htmlDict[index])
-                pass
+
+
         except KeyError:
             pass
         i += 1
