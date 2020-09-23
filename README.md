@@ -56,3 +56,6 @@ MIT License. For more information, see LICENSE.
   - 기타 변수 이름 및 함수 이름 변경
 - 20.09.22
   - 구글 스프레드시트에서 시간 당 읽기 횟수 초과로 인한 메일 주소 읽기 및 발송 실패 오류 수정
+- 20.09.23
+  - 항공대 생활관 추가
+  - 미리보기에서 이미지 링크 수정 방식을 함수 인자로 홈페이지를 받는 방식에서 ExtractedNotiList 의 멤버 변수 linkForFixImg 로 변경
