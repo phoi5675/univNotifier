@@ -13,3 +13,4 @@ class ExtractedNotiList:
         self.category = ''
         self.extractedNotiList = []
         self.linkForFixImg = ''
+

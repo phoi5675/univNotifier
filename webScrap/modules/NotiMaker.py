@@ -3,7 +3,16 @@ from bs4 import BeautifulSoup
 from .NotiFinder import NotiFinder
 
 
-def addWebPageLinkToHrefList(singleNotiList, webPage, isNeedToExtractHrefId: bool):
+def addWebPageLinkToHrefList(singleNotiList, webPage):
+    def addWebLinkToHref(href, webPageLink):
+        return webPageLink + href
+
+    for extractedNotiList in singleNotiList.extractedNotiList:
+        extractedNotiList.href = addWebLinkToHref(extractedNotiList.href, webPage)
+
+
+# addWebPageLinkToHrefList 대신 사용할 메소드 / 링크를 POST 방식으로 변경 가능하게 만듦
+def addPostMethod(page, singleNotiList, webPage):
     def addWebLinkToHref(href, webPageLink):
         return webPageLink + href
 
@@ -12,10 +21,17 @@ def addWebPageLinkToHrefList(singleNotiList, webPage, isNeedToExtractHrefId: boo
         # 정규식 사용 등 다양한 방법이 있지만, 가독성 및 속도를 위해 기존 코드 사용
         return href[(href.find('(') + 1): href.find(',')]
 
+    def extractNewKauId(page, href):
+        page.postElements['bbsId'] = href[(href.find('(') + 2): href.find(',') - 2]
+        page.postElements['nttId'] = href[(href.find(',') + 3): href.find(')') - 2]
+
     for extractedNotiList in singleNotiList.extractedNotiList:
         # 공지의 ID 값을 따로 추출 해야 하는 경우
-        if isNeedToExtractHrefId:
+        if page.postElements['mboardView'] is not None:
             extractedNotiList.href = extractIntBoardId(extractedNotiList.href)
+        elif len(page.postElements) != 0:
+            extractNewKauId(page, extractedNotiList.href)
+
         extractedNotiList.href = addWebLinkToHref(extractedNotiList.href, webPage)
 
 
@@ -133,7 +149,7 @@ def extractContentsInsideLink(notiList, notiFinder):
 
             return detailsTag.details
 
-        foundContextTag = notiFinder.findElements(scrapedHtml, 'preview', False)
+        foundContextTag = scrapedHtml.find(attrs={notiFinder.notiFinderElements['preview'].attrKeyword:notiFinder.notiFinderElements['preview'].valueKeyword})
 
         if isContains(foundContextTag, 'img') and isNeedToFixImageLink(notiList.linkForFixImg):
             fixImageLink(foundContextTag, notiList.linkForFixImg)
