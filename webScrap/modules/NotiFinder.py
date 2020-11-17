@@ -3,17 +3,27 @@ import requests
 from .ExtractedNoti import *
 from bs4 import BeautifulSoup
 from datetime import date
+from selenium import webdriver
 
 
 class NotiFinderElements:
     def __init__(self):
         self.attrKeyword = ''
         self.valueKeyword = ''
+        # text 또는 attr 를 추출하는 방법을 명시해야 하는 경우 사용(title, date, href)
+        # getText, getAttrVal, getHref 로 사용
+        self.extractionMethod = 'getText'
         self.removeTagKeywords = []
 
 
 class NotiFinder:
     def __init__(self):
+        self.extractDate = self.findElements
+        self.extractTitle = self.findElements
+        self.extractHref = self.findElements
+
+        self.fixHref = None
+
         self.notiFinderElements = {
             'notiList': NotiFinderElements(),
             'notiLine': NotiFinderElements(),
@@ -27,6 +37,9 @@ class NotiFinder:
     def setAttributeAndValue(self, attribute, value, select: str):
         self.notiFinderElements[select].attrKeyword = attribute
         self.notiFinderElements[select].valueKeyword = value
+
+    def setExtractionMethod(self, extMethod, select: str):
+        self.notiFinderElements[select].extractionMethod = extMethod
 
     def addRemoveTagKeywords(self, removeTag, select: str):
         self.notiFinderElements[select].removeTagKeywords.append(removeTag)
@@ -43,24 +56,26 @@ class NotiFinder:
             attrs={self.notiFinderElements['notiLine'].attrKeyword: self.notiFinderElements['notiLine'].valueKeyword}
         )
 
-    def findElements(self, wrappedNotiLine, select: str, isReturnText=False):
+    def findElements(self, notiFinderElement, wrappedNotiLine, select: str):
         def deleteNotWantedTags(extractedTag):
             for keywords in self.notiFinderElements[select].removeTagKeywords:
                 decomposedTag = extractedTag.find(keywords)
                 decomposedTag.decompose()
 
         try:
-            if select == 'href':
-                return wrappedNotiLine.a.get(self.notiFinderElements[select].valueKeyword)
+            extractionMethod = self.notiFinderElements[select].extractionMethod
+            if extractionMethod == 'getHref':
+                return wrappedNotiLine.a.get(notiFinderElement[select].valueKeyword)
             else:
                 found = wrappedNotiLine.find(
-                    attrs={self.notiFinderElements[select].attrKeyword: self.notiFinderElements[select].valueKeyword}
+                    attrs={notiFinderElement[select].attrKeyword: notiFinderElement[select].valueKeyword}
                 )
+
                 deleteNotWantedTags(found)
-                if isReturnText:
+                if extractionMethod == 'getText':
                     return found.get_text()
-                else:
-                    return found
+                elif extractionMethod == 'getAttr':
+                    return found[notiFinderElement.attrKeyword]
 
         except AttributeError:
             return ''
@@ -82,11 +97,17 @@ class NotiFinder:
             html = html.replace("\r", "")
 
             return html
+        # driver 를 이용하여 자바스크립트가 동적으로 페이지를 불러온 후에 웹 스크랩
 
-        requestedHtml = requests.get(webPage)
-        textHtml = requestedHtml.text
+        driver = webdriver.Chrome("/Users/kangminjae/Downloads/chromedriver")
+        driver.get(webPage)
+        textHtml = driver.page_source
+
+        # requestedHtml = requests.get(webPage)
+        # textHtml = requestedHtml.text
 
         textHtml = removeBlank(textHtml)
+        driver.quit()
 
         return BeautifulSoup(textHtml, 'lxml')
 
@@ -99,12 +120,15 @@ def webScrap(notiFinder, notiListAll, webPageList, categoryList):
         notiList.category = categoryList[webPage]
 
         for notiLine in notiLines:
-            date = notiFinder.findElements(notiLine, 'date', True)
+            date = notiFinder.extractDate(notiFinder.notiFinderElements, notiLine, 'date')
 
             if NotiFinder.isToday(date):  # 오늘 날짜와 일치하는 공지만 추가
-                title = notiFinder.findElements(notiLine, 'title', True)
+                title = notiFinder.extractTitle(notiFinder.notiFinderElements, notiLine, 'title')
                 # href 에는 게시물 id 만 포함
-                href = notiFinder.findElements(notiLine, 'href', True)
+                href = notiFinder.extractHref(notiFinder.notiFinderElements, notiLine, 'href')
+                # href 수정 필요 시 수정
+                if notiFinder.fixHref is not None:
+                    href = notiFinder.fixHref(href)
 
                 notiList.extractedNotiList.append(ExtractedNoti(title, date, href))
                 notiList.numOfNoti = notiList.numOfNoti + 1
