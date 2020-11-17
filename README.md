@@ -59,3 +59,14 @@ MIT License. For more information, see LICENSE.
 - 20.09.23
   - 항공대 생활관 추가
   - 미리보기에서 이미지 링크 수정 방식을 함수 인자로 홈페이지를 받는 방식에서 ExtractedNotiList 의 멤버 변수 linkForFixImg 로 변경
+- 20.11.16
+- 웹스크랩 방식 변경 request -> webdriver
+  - Dependencies 추가
+   - Selenium
+   - Gecko driver
+   - Firefox / chrome
+  - 항공대 학과 공지 지원
+  - 항공대 함수 일부 모듈화(모듈화 함수 저장용 파일 추가)
+   - 링크 추출 함수
+  - 공지 검색 추출 방법 변경 -> boolean 사용 없애고 get* string 별도 설정
+  - 메일 전송 파일과 스크랩 파일 분리
