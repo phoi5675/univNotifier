@@ -7,25 +7,40 @@ SCHOLAR = "http://www.kau.ac.kr/page/kauspace/scholarship_list.jsp" + BOARDID  #
 RESEARCH = "http://www.kau.ac.kr/page/kauspace/research_list.jsp" + BOARDID  # 산학 / 연구
 EVENT = "http://www.kau.ac.kr/page/kauspace/event_list.jsp" + BOARDID  # 행사
 EMPLOY = "http://www.kau.ac.kr/page/kauspace/employment_list.jsp" + BOARDID  # 모집 / 채용
-DORM = "http://www.kau.ac.kr/page/web/life/community/notice_li.jsp" + BOARDID # 기숙사
+DORM = "http://www.kau.ac.kr/page/web/life/community/notice_li.jsp" + BOARDID  # 기숙사
 CAREER = ["http://career.kau.ac.kr/ko/community"]  # 취업 -> 양식이 다르므로 따로 추가
 CAREERAPPEND = ["http://career.kau.ac.kr"]  # 취업 -> 링크 붙이기 용도
 
 # 학과공지
-MACH = "http://www.kau.ac.kr/page/web/am_engineer/notice/dept_li.jsp" + BOARDID  # 항우기
-ELEC = "http://www.kau.ac.kr/page/dept/eie/board/undergraduate_notice.jsp" + BOARDID  # 항전정
-SOFT = ["http://sw.kau.ac.kr/?page_id=739"]  # 소프트
-STUF = "http://www.kau.ac.kr/page/web/aviation_stuff/notice/dept_li.jsp" + BOARDID  # 재료
-LAWS = "http://www.kau.ac.kr/page/web/universe_law/life/notice_li.jsp" + BOARDID  # 교물
-AVIA = "http://www.kau.ac.kr/page/web/aviation_service/information/no_dept_li.jsp" + BOARDID  # 운항
-BUSI = "http://www.kau.ac.kr/page/web/business/community/news_li.jsp" + BOARDID  # 경영
-FREE = "http://www.kau.ac.kr/page/school/free/notice/notice_li.jsp" + BOARDID  # 자유
+DEPTPAGE = "http://college.kau.ac.kr/web/pages/"
+MACH = DEPTPAGE + "gc1986b.do"  # 항우기
+ELEC = DEPTPAGE + "gc23761b.do"  # 항전정
+SOFT = DEPTPAGE + "gc911b.do"  # 소프트
+STUF = DEPTPAGE + "gc46806b.do"  # 재료
+LAWS = DEPTPAGE + "gc93464b.do"  # 교물
+AVIA = DEPTPAGE + "gc61682b.do"  # 운항
+BUSI = DEPTPAGE + "gc25685b.do"  # 경영
+FREE = DEPTPAGE + "gc46051b.do"  # 자유
+# 스마트드론 학과 모집하면 추가해야됨
+
+# get 메서드를 사용하기 위한 attr 이어붙이기용
+MACHAPP = "?bbsAuth=30&siteFlag=am_www&bbsFlag=View&bbsId=0024&currentPageNo=1&mnuId=gc1986b&nttId="  # 항우기
+ELECAPP = "?bbsAuth=30&siteFlag=eie_www&bbsFlag=View&bbsId=0015&currentPageNo=&mnuId=gc23761b&nttId="  # 항전정
+SOFTAPP = "?bbsAuth=30&siteFlag=sw_www&bbsFlag=View&bbsId=0032&currentPageNo=&mnuId=gc911b&nttId="  # 소프트
+STUFAPP = "?bbsAuth=30&siteFlag=materials_www&bbsFlag=View&bbsId=0096&currentPageNo=1&mnuId=gc46806b&nttId="  # 재료
+LAWSAPP = "?bbsAuth=30&siteFlag=attll_www&bbsFlag=View&bbsId=0048&currentPageNo=&mnuId=gc93464b&nttId="  # 교물
+AVIAAPP = "?bbsAuth=30&siteFlag=hw_www&bbsFlag=View&bbsId=0003&currentPageNo=&mnuId=gc61682b&nttId="  # 운항
+BUSIAPP = "?bbsAuth=30&siteFlag=biz_www&bbsFlag=View&bbsId=0056&currentPageNo=&mnuId=gc25685b&nttId="  # 경영
+FREEAPP = "?bbsAuth=30&siteFlag=free_www&bbsFlag=View&bbsId=0072&currentPageNo=1&mnuId=gc46051b&nttId="  # 자유
 
 # 학교 전체 공지 링크 리스트
 GENWEB = [GENERAL, ACADEMIC, SCHOLAR, RESEARCH, EVENT, EMPLOY, DORM]
 
 # 학과 공지 배열
-DEPWEB = [MACH, ELEC, STUF, LAWS, AVIA, BUSI, FREE]
+DEPWEB = [MACH, ELEC, STUF, LAWS, AVIA, BUSI, FREE, SOFT]
+
+# get 메서드를 사용하기 위한 attr 이어붙이기용 배열
+DEPAPPARY = [MACHAPP, ELECAPP, STUFAPP, LAWSAPP, AVIAAPP, BUSIAPP, FREEAPP, SOFTAPP]
 
 # 학교 전체 공지 배열 크기
 GENINT = len(GENWEB)
@@ -46,7 +61,7 @@ GENWEBDICT = {GENERAL: "일반", ACADEMIC: "학사", SCHOLAR: "장학 / 대출",
               EVENT: "행사", EMPLOY: "모집 / 채용", DORM : "생활관", CAREER[0]: "취업"
 }
 # 학과 공지 딕셔너리
-DEPWEBDICT = {MACH: "항공우주기계공학부", ELEC: "항공전자정보공학부", SOFT[0]: "소프트웨어학과", STUF: "재료공학부",
+DEPWEBDICT = {MACH: "항공우주기계공학부", ELEC: "항공전자정보공학부", SOFT: "소프트웨어학과", STUF: "재료공학부",
               LAWS: "항공교통물류학부", AVIA: "항공운항학과", BUSI: "경영학부", FREE: "자유전공학부"
 }
 
@@ -66,7 +81,7 @@ HTMLBASE = '''
 # HTML 아래에 구독 신청 / 취소 등 정보를 위한 p 태그 및 신청 / 취소 링크
 SUBSCRIBELINK = "https://forms.gle/WwL3GB57zbRq5PWG6"
 UNSUBSCRIBELINK = "https://forms.gle/eHxyqZTD1HNA3u9SA"
-MEMOSTRING = "첨부파일도 메일에서 바로 받을 수 있게 할 예정입니다."
+MEMOSTRING = ""
 MAILLINK = "phoinotifier@gmail.com"
 INFOTAG = '''
 <p>
@@ -90,10 +105,11 @@ SENDERID = "phoiNotifier@gmail.com"
 SENDERPWD = "pwd"
 
 # 스프레드시트 링크
-SPREADSHEETLINK = "https://https://docs.google.com/spreadsheets/"
+SPREADSHEETLINK = "https://https://docs.google.com/spreadsheets/d/1sX2eyYgBJta8y_p0ZMCvhTto6rjBOQZoOo3gStXtg3M/edit" \
+                  "#gid=534886396 "
 
 # 시트 이름
-SHEETNAME = "시트1"
+SHEETNAME = "설문지 응답 시트1"
 
 # email 제목
 EMAILTITLE = "항공대학교 공지사항"

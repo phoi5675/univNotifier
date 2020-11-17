@@ -1,10 +1,12 @@
 # -*- coding:utf-8 -*-
 import copy
 
+from webScrap.kau.KauFunc import *
 from webScrap.kau.const import *
 from webScrap.modules.DeleteFile import *
 from webScrap.modules.NotiFinder import *
 from webScrap.modules.NotiMaker import *
+from webScrap.modules.Page import *
 '''
 from DeleteFile import *
 from NotiFinder import *
@@ -20,91 +22,92 @@ def main():
 
     # -------------------- 공지 리스트 생성 -------------------- #
     genNotiListAll = list(ExtractedNotiList() for i in range(GENINT))
+    genNotiFinder = NotiFinder()
+
     deptNotiListAll = list(ExtractedNotiList() for i in range(DEPINT))
-
-    notiFinder = NotiFinder()
-
-    # 소프트웨어 학과 공지도 따로 생성
-    softNotiListAll = list(ExtractedNotiList() for i in range(len(SOFT)))
-    notiFinderSoft = NotiFinder()
+    deptNotiFinder = NotiFinder()
 
     # 취업공지는 따로 생성 / 호환성을 위해 리스트로 생성
     careerNotiListAll = list(ExtractedNotiList() for i in range(len(CAREER)))
-    notiFinderCareer = NotiFinder()
+    careerNotiFinder = NotiFinder()
+
+    # -------------------- 별도 함수 설정 (optional) -------------------- #
+    genNotiFinder.fixHref = extractGenHref
+    deptNotiFinder.fixHref = extractDeptHref
 
     # -------------------- 공지 검색 attribute / value 설정 -------------------- #
-    # notiFinder attribute / value 설정
-    notiFinder.setAttributeAndValue('class', 'board_list', 'notiList')
-    notiFinder.setAttributeAndValue('tag', 'tr', 'notiLine')
-    notiFinder.setAttributeAndValue('headers', 'board_title', 'title')
-    notiFinder.setAttributeAndValue('headers', 'board_create', 'date')
-    notiFinder.setAttributeAndValue('', 'href', 'href')
+    # 읿반 공지
+    genNotiFinder.setAttributeAndValue('class', 'board_list', 'notiList')
+    genNotiFinder.setAttributeAndValue('tag', 'tr', 'notiLine')
+    genNotiFinder.setAttributeAndValue('headers', 'board_title', 'title')
+    genNotiFinder.setAttributeAndValue('headers', 'board_create', 'date')
+    genNotiFinder.setAttributeAndValue('', 'href', 'href')
 
-    # notiFinder for software attribute / value 설정
-    notiFinderSoft.setAttributeAndValue('class', 'kboard-list', 'notiList')
-    notiFinderSoft.setAttributeAndValue('tag', 'tr', 'notiLine')
-    notiFinderSoft.setAttributeAndValue('class', 'kboard-avatar-cut-strings', 'title')
-    notiFinderSoft.setAttributeAndValue('class', 'kboard-list-date', 'date')
-    notiFinderSoft.setAttributeAndValue('', 'href', 'href')
+    # 학과 공지
+    deptNotiFinder.setAttributeAndValue('id', 'notiDfTable', 'notiList')
+    deptNotiFinder.setAttributeAndValue('tag', 'tr', 'notiLine')
+    deptNotiFinder.setAttributeAndValue('class', 'tit', 'title')
+    deptNotiFinder.setAttributeAndValue('class', 'not_m', 'date')
+    deptNotiFinder.setAttributeAndValue('onclick', '*', 'href')
 
-    # notiFinder for career attribute / value 설정
-    notiFinderCareer.setAttributeAndValue('class', 'black', 'notiList')
-    notiFinderCareer.setAttributeAndValue('class', 'tbody', 'notiLine')
-    notiFinderCareer.setAttributeAndValue('class', 'title', 'title')
-    notiFinderCareer.setAttributeAndValue('class', 'reg_date', 'date')
-    notiFinderCareer.setAttributeAndValue('', 'href', 'href')
+    # 취업 공지
+    careerNotiFinder.setAttributeAndValue('class', 'black', 'notiList')
+    careerNotiFinder.setAttributeAndValue('class', 'tbody', 'notiLine')
+    careerNotiFinder.setAttributeAndValue('class', 'title', 'title')
+    careerNotiFinder.setAttributeAndValue('class', 'reg_date', 'date')
+    careerNotiFinder.setAttributeAndValue('', 'href', 'href')
+
+    # -------------------- 공지 검색 추출 방법 설정 -------------------- #
+    # 기본값 = getText
+    genNotiFinder.setExtractionMethod("getHref", "href")
+    deptNotiFinder.setExtractionMethod("getAttr", "href")
+    deptNotiFinder.extractHref = findDeptHref
+    careerNotiFinder.setExtractionMethod("getHref", "href")
+
+    # -------------------- 공지 추출 시 하위 태그 삭제 (optional) -------------------- #
+    deptNotiFinder.notiFinderElements["title"].removeTagKeywords.append("ul")
 
     # -------------------- 공지 스크랩 -------------------- #
     # 일반 공지 스크랩
-    webScrap(notiFinder, genNotiListAll, GENWEB, GENWEBDICT)
+    webScrap(genNotiFinder, genNotiListAll, GENWEB, GENWEBDICT)
 
     # 취업 공지 스크랩
-    webScrap(notiFinderCareer, careerNotiListAll, CAREER, GENWEBDICT)
+    webScrap(careerNotiFinder, careerNotiListAll, CAREER, GENWEBDICT)
 
     # 학과 공지 스크랩
-    webScrap(notiFinder, deptNotiListAll, DEPWEB, DEPWEBDICT)
-
-    # 소프트학과 공지 스크랩
-    webScrap(notiFinderSoft, softNotiListAll, SOFT, DEPWEBDICT)
+    webScrap(deptNotiFinder, deptNotiListAll, DEPWEB, DEPWEBDICT)
 
     # -------------------- href 수정 -------------------- #
     # href 수정
     # 취업 공지를 제외한 나머지 학교 / 학과 공지는 BoardId 값 따로 추출 필요
     for genNotiList, genWeb in zip(genNotiListAll, GENWEB):
-        addWebPageLinkToHrefList(genNotiList, genWeb, True)
-    for deptNotiList, depWeb in zip(deptNotiListAll, DEPWEB):
-        addWebPageLinkToHrefList(deptNotiList, depWeb, True)
+        addWebPageLinkToHrefList(genNotiList, genWeb)
+    for deptNotiList, depWeb, appendAttr in zip(deptNotiListAll, DEPWEB, DEPAPPARY):
+        addWebPageLinkToHrefList(deptNotiList, appendHref(depWeb, appendAttr))
     # 취업 공지는 BoardId 값 추출 필요 없음
-    addWebPageLinkToHrefList(careerNotiListAll[0], CAREERAPPEND[0], False)
-    # 소프트 공지도 BoardId 값 추출 필요 없음
-    addWebPageLinkToHrefList(softNotiListAll[0], SOFT[0], False)
+    addWebPageLinkToHrefList(careerNotiListAll[0], CAREERAPPEND[0])
 
     # -------------------- 공지 내용 미리보기 만들기 -------------------- #
-    notiFinder.setAttributeAndValue("colspan", "4", "preview")
+    genNotiFinder.setAttributeAndValue("colspan", "4", "preview")
+    genNotiListAll[GENWEB.index(DORM)].linkForFixImg = HOMEPAGE
 
-    notiFinderCareer.setAttributeAndValue("data-role", "wysiwyg-content", "preview")
+    careerNotiFinder.setAttributeAndValue("data-role", "wysiwyg-content", "preview")
 
-    notiFinderSoft.setAttributeAndValue("class", "content-view", "preview")
+    deptNotiFinder.setAttributeAndValue("id", "divViewConts", "preview")
 
     for notiList in genNotiListAll:
-        extractContentsInsideLink(notiList, notiFinder)
+        extractContentsInsideLink(notiList, genNotiFinder)
 
     for notiList in deptNotiListAll:
-        if notiList.category == "경영학부":  # 경영학부 공지 세부내용은 로그인 한 사용자만 볼 수 있으므로 접근 불가
-            continue
-        extractContentsInsideLink(notiList, notiFinder)
+        extractContentsInsideLink(notiList, deptNotiFinder)
 
     for notiList in careerNotiListAll:
-        extractContentsInsideLink(notiList, notiFinderCareer)
-
-    for notiList in softNotiListAll:
-        extractContentsInsideLink(notiList, notiFinderSoft)
+        extractContentsInsideLink(notiList, careerNotiFinder)
 
     # -------------------- 별도 notiFinder 로 생성한 공지 append (optional) -------------------- #
     # 취업 공지를 일반 공지로 넘기기
     genNotiListAll.append(careerNotiListAll[0])
-    # 소프트 공지를 일반 공지로 넘기기
-    deptNotiListAll.append(softNotiListAll[0])
+
     # -------------------- html 인스턴스에 공지, 정보 태그 추가 및 파일 저장 -------------------- #
     # 받은 공지를 html 인스턴스로 넘기기
     htmlBaseInString = HTMLBASE
