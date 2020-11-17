@@ -34,6 +34,10 @@ def main():
 
     notiFinder.addRemoveTagKeywords('span', 'date')
 
+    # -------------------- 공지 검색 추출 방법 설정 -------------------- #
+    # 기본값 = getText
+    notiFinder.setExtractionMethod("getHref", "href")
+
     # -------------------- 공지 스크랩 -------------------- #
     # 일반 공지 스크랩
     webScrap(notiFinder, genNotiListAll, GENWEB, GENWEBDICT)
@@ -45,9 +49,9 @@ def main():
     # href 수정
     # 취업 공지를 제외한 나머지 학교 / 학과 공지는 BoardId 값 따로 추출 필요
     for genNotiList in genNotiListAll:
-        addWebPageLinkToHrefList(genNotiList, GENERALNOTILINK, False)
+        addWebPageLinkToHrefList(genNotiList, GENERALNOTILINK)
     for deptNotiList, depWeb in zip(deptNotiListAll, DEPWEB):
-        addWebPageLinkToHrefList(deptNotiList, depWeb, False)
+        addWebPageLinkToHrefList(deptNotiList, depWeb)
 
     # -------------------- 공지 내용 미리보기 만들기 -------------------- #
     notiFinder.setAttributeAndValue("class", "board-view-content-wrap board-view-txt", "preview")
