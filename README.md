@@ -17,6 +17,9 @@ venv 및 setup.py 가 존재해야 자매 폴더의 모듈 import 가능합니�
 - oauth2client
 - email
 - smtplib
+- selenium
+- gecko driver
+- Firefox
 
 # Sources
 - 웹 스크래핑
