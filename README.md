@@ -10,7 +10,6 @@ venv 및 setup.py 가 존재해야 자매 폴더의 모듈 import 가능합니�
 개인 리눅스 서버의 cron 을 이용해서 파이썬 파일을 실행합니다
 # Requirements
 - python3 (2.7.x 에서는 unicode 오류 가능성 있음)
-- requests
 - datetime
 - bs4 (Beautifulsoup)
 - gspread
@@ -20,6 +19,7 @@ venv 및 setup.py 가 존재해야 자매 폴더의 모듈 import 가능합니�
 - selenium
 - gecko driver
 - Firefox
+- ~~requests~~ (selenium 사용으로 deprecated)
 
 # Sources
 - 웹 스크래핑
