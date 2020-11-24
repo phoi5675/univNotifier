@@ -19,6 +19,7 @@ venv 및 setup.py 가 존재해야 자매 폴더의 모듈 import 가능합니�
 - selenium
 - gecko driver
 - Firefox
+- time
 - ~~requests~~ (selenium 사용으로 deprecated)
 
 # Sources
@@ -73,3 +74,7 @@ MIT License. For more information, see LICENSE.
     - 링크 추출 함수
   - 공지 검색 추출 방법 변경 -> boolean 사용 없애고 get* string 별도 설정
   - 메일 전송 파일과 스크랩 파일 분리
+- 20.11.24
+  - webToXmlClass 에서 웹 페이지 로딩이 되지 않아 html을 추출할 때 제대로 추출되지 않는 오류 수정(time.sleep() 사용)
+  - Dependency 추가
+    - time
