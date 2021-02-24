@@ -78,6 +78,6 @@ MIT License. For more information, see LICENSE.
   - webToXmlClass 에서 웹 페이지 로딩이 되지 않아 html을 추출할 때 제대로 추출되지 않는 오류 수정(time.sleep() 사용)
   - Dependency 추가
     - time
-- 21. 2.24
+- 21.2.24
   - 항공대 홈페이지 리뉴얼로 인한 스크랩 방식 일부 변경
 
