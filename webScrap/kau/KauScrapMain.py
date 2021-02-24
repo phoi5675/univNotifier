@@ -6,7 +6,6 @@ from webScrap.kau.const import *
 from webScrap.modules.DeleteFile import *
 from webScrap.modules.NotiFinder import *
 from webScrap.modules.NotiMaker import *
-from webScrap.modules.Page import *
 '''
 from DeleteFile import *
 from NotiFinder import *
@@ -34,14 +33,15 @@ def main():
     # -------------------- 별도 함수 설정 (optional) -------------------- #
     genNotiFinder.fixHref = extractGenHref
     deptNotiFinder.fixHref = extractDeptHref
+    genNotiFinder.extractDate = extractGenDate
 
     # -------------------- 공지 검색 attribute / value 설정 -------------------- #
     # 읿반 공지
-    genNotiFinder.setAttributeAndValue('class', 'board_list', 'notiList')
+    genNotiFinder.setAttributeAndValue('class', 'table_board', 'notiList')
     genNotiFinder.setAttributeAndValue('tag', 'tr', 'notiLine')
-    genNotiFinder.setAttributeAndValue('headers', 'board_title', 'title')
-    genNotiFinder.setAttributeAndValue('headers', 'board_create', 'date')
-    genNotiFinder.setAttributeAndValue('', 'href', 'href')
+    genNotiFinder.setAttributeAndValue('class', 'tit', 'title')
+    genNotiFinder.setAttributeAndValue('class', 'not_m', 'date')
+    genNotiFinder.setAttributeAndValue('onclick', '*', 'href')
 
     # 학과 공지
     deptNotiFinder.setAttributeAndValue('id', 'notiDfTable', 'notiList')
@@ -59,13 +59,14 @@ def main():
 
     # -------------------- 공지 검색 추출 방법 설정 -------------------- #
     # 기본값 = getText
-    genNotiFinder.setExtractionMethod("getHref", "href")
+    genNotiFinder.setExtractionMethod("getAttr", "href")
+    genNotiFinder.extractHref = findDeptHref
     deptNotiFinder.setExtractionMethod("getAttr", "href")
     deptNotiFinder.extractHref = findDeptHref
     careerNotiFinder.setExtractionMethod("getHref", "href")
 
     # -------------------- 공지 추출 시 하위 태그 삭제 (optional) -------------------- #
-    deptNotiFinder.notiFinderElements["title"].removeTagKeywords.append("ul")
+    # deptNotiFinder.notiFinderElements["title"].removeTagKeywords.append("ul")
 
     # -------------------- 공지 스크랩 -------------------- #
     # 일반 공지 스크랩
@@ -80,16 +81,16 @@ def main():
     # -------------------- href 수정 -------------------- #
     # href 수정
     # 취업 공지를 제외한 나머지 학교 / 학과 공지는 BoardId 값 따로 추출 필요
-    for genNotiList, genWeb in zip(genNotiListAll, GENWEB):
-        addWebPageLinkToHrefList(genNotiList, genWeb)
+    for genNotiList, genWeb, appendAttr in zip(genNotiListAll, GENWEB, GENAPPARY):
+        addWebPageLinkToHrefList(genNotiList, appendHref(genWeb, appendAttr))
     for deptNotiList, depWeb, appendAttr in zip(deptNotiListAll, DEPWEB, DEPAPPARY):
         addWebPageLinkToHrefList(deptNotiList, appendHref(depWeb, appendAttr))
     # 취업 공지는 BoardId 값 추출 필요 없음
     addWebPageLinkToHrefList(careerNotiListAll[0], CAREERAPPEND[0])
 
     # -------------------- 공지 내용 미리보기 만들기 -------------------- #
-    genNotiFinder.setAttributeAndValue("colspan", "4", "preview")
-    genNotiListAll[GENWEB.index(DORM)].linkForFixImg = HOMEPAGE
+    genNotiFinder.setAttributeAndValue("id", "divViewConts", "preview")
+    # genNotiListAll[GENWEB.index(DORM)].linkForFixImg = HOMEPAGE
 
     careerNotiFinder.setAttributeAndValue("data-role", "wysiwyg-content", "preview")
 
