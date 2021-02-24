@@ -80,3 +80,4 @@ MIT License. For more information, see LICENSE.
     - time
 - 21. 2.24
   - 항공대 홈페이지 리뉴얼로 인한 스크랩 방식 일부 변경
+
