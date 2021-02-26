@@ -7,9 +7,15 @@ SCHOLAR = HOMEPAGE + "gc73650b.do"  # 장학 / 대출
 RESEARCH = HOMEPAGE + "gc73900b.do"  # 산학 / 연구
 EVENT = HOMEPAGE + "gc29925b.do"  # 행사
 EMPLOY = HOMEPAGE + "gc3256b.do"  # 모집 / 채용
-DORM = "http://www.kau.ac.kr/page/web/life/community/notice_li.jsp" + BOARDID  # 기숙사
+
+DORM = ["http://old.kau.ac.kr/page/web/life/community/notice_li.jsp" + BOARDID]  # 기숙사
 CAREER = ["http://career.kau.ac.kr/ko/community"]  # 취업 -> 양식이 다르므로 따로 추가
 CAREERAPPEND = ["http://career.kau.ac.kr"]  # 취업 -> 링크 붙이기 용도
+
+# 융합학부
+SME = "http://sme.kau.ac.kr/community/community_01.php"
+SAMC = "http://samc.kau.ac.kr/community/community_01.php"
+SMEAPPEND = ["http://sme.kau.ac.kr"]
 
 # 학과공지
 DEPTPAGE = "http://college.kau.ac.kr/web/pages/"
@@ -24,7 +30,7 @@ FREE = DEPTPAGE + "gc46051b.do"  # 자유
 # 스마트드론 학과 모집하면 추가해야됨
 
 # get 메서드를 사용하기 위한 attr 이어붙이기용
-# university boards
+# 학교
 GENAPP = "?bbsAuth=30&siteFlag=www&bbsFlag=View&bbsId=0119&currentPageNo=&mnuId=gc32172b&returnUrl=&nttId="
 ACAAPP = "?bbsAuth=30&siteFlag=www&bbsFlag=View&bbsId=0120&currentPageNo=&mnuId=gc14561b&returnUrl=&nttId="
 SCHAPP = "?bbsAuth=30&siteFlag=www&bbsFlag=View&bbsId=0121&currentPageNo=&mnuId=gc73650b&returnUrl=&nttId="
@@ -32,7 +38,7 @@ RESAPP = "?bbsAuth=30&siteFlag=www&bbsFlag=View&bbsId=0123&currentPageNo=&mnuId=
 EVEAPP = "?bbsAuth=30&siteFlag=www&bbsFlag=View&bbsId=0122&currentPageNo=&mnuId=gc29925b&returnUrl=&nttId="
 EMPAPP = "?bbsAuth=30&siteFlag=www&bbsFlag=View&bbsId=0124&currentPageNo=&mnuId=gc3256b&returnUrl=&nttId="
 
-# department
+# 학과
 MACHAPP = "?bbsAuth=30&siteFlag=am_www&bbsFlag=View&bbsId=0024&currentPageNo=1&mnuId=gc1986b&nttId="  # 항우기
 ELECAPP = "?bbsAuth=30&siteFlag=eie_www&bbsFlag=View&bbsId=0015&currentPageNo=&mnuId=gc23761b&nttId="  # 항전정
 SOFTAPP = "?bbsAuth=30&siteFlag=sw_www&bbsFlag=View&bbsId=0032&currentPageNo=&mnuId=gc911b&nttId="  # 소프트
@@ -43,10 +49,13 @@ BUSIAPP = "?bbsAuth=30&siteFlag=biz_www&bbsFlag=View&bbsId=0056&currentPageNo=&m
 FREEAPP = "?bbsAuth=30&siteFlag=free_www&bbsFlag=View&bbsId=0072&currentPageNo=1&mnuId=gc46051b&nttId="  # 자유
 
 # 학교 전체 공지 링크 리스트
-GENWEB = [GENERAL, ACADEMIC, SCHOLAR, RESEARCH, EVENT, EMPLOY]  # dorm temporarily unavailable :(
+GENWEB = [GENERAL, ACADEMIC, SCHOLAR, RESEARCH, EVENT, EMPLOY]
 
 # 학과 공지 배열
 DEPWEB = [MACH, ELEC, STUF, LAWS, AVIA, BUSI, FREE, SOFT]
+
+# 융합전공 공지 배열
+SMEWEB = [SME, SAMC]
 
 # get 메서드를 사용하기 위한 attr 이어붙이기용 배열
 GENAPPARY = [GENAPP, ACAAPP, SCHAPP, RESAPP, EVEAPP, EMPAPP]
@@ -68,7 +77,8 @@ DEPDICT = {"항우기": "mach", "항전정": "elec", "소프트": "soft", "재�
 # -------------------- html -------------------- #
 # 학교 전체 공지 딕셔너리
 GENWEBDICT = {GENERAL: "일반", ACADEMIC: "학사", SCHOLAR: "장학 / 대출", RESEARCH: "산학 / 연구",
-              EVENT: "행사", EMPLOY: "모집 / 채용", DORM : "생활관", CAREER[0]: "취업"
+              EVENT: "행사", EMPLOY: "모집 / 채용", DORM[0]: "생활관", CAREER[0]: "취업", SME: "공학융합",
+              SAMC: "항공경영융합"
 }
 # 학과 공지 딕셔너리
 DEPWEBDICT = {MACH: "항공우주기계공학부", ELEC: "항공전자정보공학부", SOFT: "소프트웨어학과", STUF: "재료공학부",
@@ -91,7 +101,7 @@ HTMLBASE = '''
 # HTML 아래에 구독 신청 / 취소 등 정보를 위한 p 태그 및 신청 / 취소 링크
 SUBSCRIBELINK = "https://forms.gle/WwL3GB57zbRq5PWG6"
 UNSUBSCRIBELINK = "https://forms.gle/eHxyqZTD1HNA3u9SA"
-MEMOSTRING = "학교 홈페이지 리뉴얼로 급하게 수정하느라 생활관 공지는 당분간 지원되지 않습니다 :("
+MEMOSTRING = "<b>사이트 리뉴얼 진행 중 이므로 일부 공지가 발송되지 않을 수 있습니다</b>"
 MAILLINK = "phoinotifier@gmail.com"
 INFOTAG = '''
 <p>
@@ -105,15 +115,15 @@ INFOTAG = '''
 # -------------------- 파일 -------------------- #
 # 파일 경로 / 루트 폴더까지만 절대경로로 지정
 # 상대경로 사용 시 cron 및 파일 R/W 에서 IDE 실행 시에는 없던 오류가 발생할 가능성 있음
-FILEPATH = "./webScrap/kau/"
+FILEPATH = "/kau/"
 # FILEPATH = "./webScrap/kau/"
 # -------------------- email 발송 -------------------- #
 # json 파일 이름
 JSON = '.json'
 
 # 이메일 ID / PW
-SENDERID = "phoiNotifier@gmail.com"
-SENDERPWD = "passwd"
+SENDERID = "@gmail.com"
+SENDERPWD = ""
 
 # 스프레드시트 링크
 SPREADSHEETLINK = ""
