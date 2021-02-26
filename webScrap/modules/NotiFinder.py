@@ -27,7 +27,7 @@ class NotiFinder:
         self.fixHref = None
 
         self.notiFinderElements = {
-            'notiList': NotiFinderElements(),
+            'notiTable': NotiFinderElements(),
             'notiLine': NotiFinderElements(),
             'title': NotiFinderElements(),
             'date': NotiFinderElements(),
@@ -46,9 +46,9 @@ class NotiFinder:
     def addRemoveTagKeywords(self, removeTag, select: str):
         self.notiFinderElements[select].removeTagKeywords.append(removeTag)
 
-    def findAllWrappedNotiLine(self, scrapedHtml):
+    def findNotiTable(self, scrapedHtml):
         found = scrapedHtml.find(
-            attrs={self.notiFinderElements['notiList'].attrKeyword: self.notiFinderElements['notiList'].valueKeyword}
+            attrs={self.notiFinderElements['notiTable'].attrKeyword: self.notiFinderElements['notiTable'].valueKeyword}
         )
         if self.notiFinderElements['notiLine'].attrKeyword == 'tag':
             # 항공대처럼 attr 없이 tag 로만 게시물을 나눈 경우, tag 로 검색
@@ -58,12 +58,13 @@ class NotiFinder:
             attrs={self.notiFinderElements['notiLine'].attrKeyword: self.notiFinderElements['notiLine'].valueKeyword}
         )
 
-    def findElements(self, notiFinderElement, wrappedNotiLine, select: str):
-        def deleteNotWantedTags(extractedTag):
-            for keywords in self.notiFinderElements[select].removeTagKeywords:
-                decomposedTag = extractedTag.find(keywords)
-                decomposedTag.decompose()
+    def deleteNotWantedTags(self, extractedTag, select: str):
+        for keywords in self.notiFinderElements[select].removeTagKeywords:
+            decomposedTag = extractedTag.find(keywords)
+            decomposedTag.decompose()
 
+    # TODO 버전 변경 완료 후 findElements 지우기
+    def findElements(self, notiFinderElement, wrappedNotiLine, select: str):
         try:
             extractionMethod = self.notiFinderElements[select].extractionMethod
             if extractionMethod == 'getHref':
@@ -73,12 +74,38 @@ class NotiFinder:
                     attrs={notiFinderElement[select].attrKeyword: notiFinderElement[select].valueKeyword}
                 )
 
-                deleteNotWantedTags(found)
+                self.deleteNotWantedTags(found, select)
                 if extractionMethod == 'getText':
                     return found.get_text()
                 elif extractionMethod == 'getAttr':
                     return found[notiFinderElement.attrKeyword]
 
+        except AttributeError:
+            return ''
+
+    def getHref(self, wrappedNotiLine):
+        try:
+            return wrappedNotiLine.a.get(self.notiFinderElements['href'].valueKeyword)
+        except AttributeError:
+            return ''
+
+    def getTitle(self, wrappedNotiLine):
+        try:
+            found = wrappedNotiLine.find(
+                attrs={self.notiFinderElements['title'].attrKeyword: self.notiFinderElements['title'].valueKeyword}
+            )
+            self.deleteNotWantedTags(found, 'title')
+            return found.get_text()
+        except AttributeError:
+            return ''
+
+    def getDate(self, wrappedNotiLine):
+        try:
+            found = wrappedNotiLine.find(
+                attrs={self.notiFinderElements['date'].attrKeyword: self.notiFinderElements['date'].valueKeyword}
+            )
+            self.deleteNotWantedTags(found, 'date')
+            return found.get_text()
         except AttributeError:
             return ''
 
@@ -99,16 +126,17 @@ class NotiFinder:
             html = html.replace("\r", "")
 
             return html
+
         # driver 를 이용하여 자바스크립트가 동적으로 페이지를 불러온 후에 웹 스크랩
 
         # driver = webdriver.Chrome("/Users/kangminjae/Downloads/chromedriver")
         opts = FirefoxOptions()
         opts.add_argument("--headless")
         driver = webdriver.Firefox(firefox_options=opts, executable_path='/usr/local/bin/geckodriver')
-        
+
         driver.get(webPage)
 
-        time.sleep(2)  # 웹페이지를 받기 전에 텍스트를 받으면 로딩이 되지 않은 상태에서 받을 수 있음
+        time.sleep(3)  # 웹페이지를 받기 전에 텍스트를 받으면 로딩이 되지 않은 상태에서 받을 수 있음
 
         textHtml = driver.page_source
 
@@ -121,26 +149,23 @@ class NotiFinder:
 
         return BeautifulSoup(textHtml, 'lxml')
 
+    def webScrap(self, notiListAll, webPageList, categoryList):
+        for notiList, webPage in zip(notiListAll, webPageList):
+            scrapedHtml = NotiFinder.webToLxmlClass(webPage)
+            notiTable = self.findNotiTable(scrapedHtml)
 
-def webScrap(notiFinder, notiListAll, webPageList, categoryList):
-    for notiList, webPage in zip(notiListAll, webPageList):
-        scrapedHtml = NotiFinder.webToLxmlClass(webPage)
-        notiLines = notiFinder.findAllWrappedNotiLine(scrapedHtml)
+            notiList.category = categoryList[webPage]
 
-        notiList.category = categoryList[webPage]
+            for notiLine in notiTable:
+                date = self.getDate(notiLine)
 
-        for notiLine in notiLines:
-            date = notiFinder.extractDate(notiFinder.notiFinderElements, notiLine, 'date')
+                # if date == '2021-01-25':
+                if NotiFinder.isToday(date):  # 오늘 날짜와 일치하는 공지만 추가
+                    title = self.getTitle(notiLine)
+                    # href 에는 게시물 id 만 포함
+                    href = self.getHref(notiLine)
 
-            if NotiFinder.isToday(date):  # 오늘 날짜와 일치하는 공지만 추가
-                title = notiFinder.extractTitle(notiFinder.notiFinderElements, notiLine, 'title')
-                # href 에는 게시물 id 만 포함
-                href = notiFinder.extractHref(notiFinder.notiFinderElements, notiLine, 'href')
-                # href 수정 필요 시 수정
-                if notiFinder.fixHref is not None:
-                    href = notiFinder.fixHref(href)
-
-                notiList.extractedNotiList.append(ExtractedNoti(title, date, href))
-                notiList.numOfNoti = notiList.numOfNoti + 1
-            else:
-                continue
+                    notiList.extractedNotiList.append(ExtractedNoti(title, date, href))
+                    notiList.numOfNoti = notiList.numOfNoti + 1
+                else:
+                    continue
