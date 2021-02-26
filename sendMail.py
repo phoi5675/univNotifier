@@ -1,3 +1,6 @@
+import threading
+
+
 if __name__ == '__main__':
     def saveError(error):
         from datetime import date
@@ -10,7 +13,8 @@ if __name__ == '__main__':
     try:
         # 항공대학교 공지
         from webScrap.kau import KauSendMail
-        KauSendMail.main()
+        kau_thread = threading.Thread(target=KauSendMail.main())
+        kau_thread.start()
 
     except Exception as error:
         saveError(error)
@@ -18,7 +22,8 @@ if __name__ == '__main__':
     try:
         # 상명대학교 공지
         from webScrap.smu import SmuSendMail
-        SmuSendMail.main()
+        smu_thread = threading.Thread(target=SmuSendMail.main())
+        smu_thread.start()
 
     except Exception as error:
         saveError(error)
