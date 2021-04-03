@@ -1,7 +1,10 @@
 BOARDID = "?search_boardId="
 HOMEPAGE = "http://www.kau.ac.kr/web/pages/"
+IMGPAGE = "http://www.kau.ac.kr/"
 # 일반, 학사공지
 GENERAL = HOMEPAGE + "gc32172b.do"  # 일반
+GENERAL_P2 = HOMEPAGE + "gc32172b.do?siteFlag=www&bbsId=0119&currentPageNo=2"  # 일반 2페이지
+GENERAL_P3 = HOMEPAGE + "gc32172b.do?siteFlag=www&bbsId=0119&currentPageNo=3"  # 일반 2페이지
 ACADEMIC = HOMEPAGE + "gc14561b.do"  # 학사
 SCHOLAR = HOMEPAGE + "gc73650b.do"  # 장학 / 대출
 RESEARCH = HOMEPAGE + "gc73900b.do"  # 산학 / 연구
@@ -49,7 +52,7 @@ BUSIAPP = "?bbsAuth=30&siteFlag=biz_www&bbsFlag=View&bbsId=0056&currentPageNo=&m
 FREEAPP = "?bbsAuth=30&siteFlag=free_www&bbsFlag=View&bbsId=0072&currentPageNo=1&mnuId=gc46051b&nttId="  # 자유
 
 # 학교 전체 공지 링크 리스트
-GENWEB = [GENERAL, ACADEMIC, SCHOLAR, RESEARCH, EVENT, EMPLOY]
+GENWEB = [GENERAL, GENERAL_P2, GENERAL_P3, ACADEMIC, SCHOLAR, RESEARCH, EVENT, EMPLOY]
 
 # 학과 공지 배열
 DEPWEB = [MACH, ELEC, STUF, LAWS, AVIA, BUSI, FREE, SOFT]
@@ -58,7 +61,7 @@ DEPWEB = [MACH, ELEC, STUF, LAWS, AVIA, BUSI, FREE, SOFT]
 SMEWEB = [SME, SAMC]
 
 # get 메서드를 사용하기 위한 attr 이어붙이기용 배열
-GENAPPARY = [GENAPP, ACAAPP, SCHAPP, RESAPP, EVEAPP, EMPAPP]
+GENAPPARY = [GENAPP, GENAPP, GENAPP, ACAAPP, SCHAPP, RESAPP, EVEAPP, EMPAPP]
 DEPAPPARY = [MACHAPP, ELECAPP, STUFAPP, LAWSAPP, AVIAAPP, BUSIAPP, FREEAPP, SOFTAPP]
 
 # 학교 전체 공지 배열 크기
@@ -76,7 +79,7 @@ DEPDICT = {"항우기": "mach", "항전정": "elec", "소프트": "soft", "재�
 
 # -------------------- html -------------------- #
 # 학교 전체 공지 딕셔너리
-GENWEBDICT = {GENERAL: "일반", ACADEMIC: "학사", SCHOLAR: "장학 / 대출", RESEARCH: "산학 / 연구",
+GENWEBDICT = {GENERAL: "일반", GENERAL_P2: "", GENERAL_P3: "", ACADEMIC: "학사", SCHOLAR: "장학 / 대출", RESEARCH: "산학 / 연구",
               EVENT: "행사", EMPLOY: "모집 / 채용", DORM[0]: "생활관", CAREER[0]: "취업", SME: "공학융합",
               SAMC: "항공경영융합"
 }
