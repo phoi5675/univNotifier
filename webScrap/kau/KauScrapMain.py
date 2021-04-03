@@ -47,16 +47,16 @@ def main():
     genNotiFinder.webScrap(genNotiListAll, GENWEB, GENWEBDICT)
 
     # 취업 공지 스크랩
-    careerNotiFinder.webScrap(careerNotiListAll, CAREER, GENWEBDICT)
+    # careerNotiFinder.webScrap(careerNotiListAll, CAREER, GENWEBDICT)
 
     # 생활관 공지 스크랩
-    dormNotiFinder.webScrap(dormNotiListAll, DORM, GENWEBDICT)
+    # dormNotiFinder.webScrap(dormNotiListAll, DORM, GENWEBDICT)
 
     # 학과 공지 스크랩
-    deptNotiFinder.webScrap(deptNotiListAll, DEPWEB, DEPWEBDICT)
+    # deptNotiFinder.webScrap(deptNotiListAll, DEPWEB, DEPWEBDICT)
 
     # 공학융합 공지 스크랩
-    smeNotiFinder.webScrap(smeNotiListAll, SMEWEB, GENWEBDICT)
+    # smeNotiFinder.webScrap(smeNotiListAll, SMEWEB, GENWEBDICT)
 
     # -------------------- href 수정 -------------------- #
     # href 수정
@@ -72,8 +72,12 @@ def main():
     # 취업 공지는 BoardId 값 추출 필요 없음
     KauNotiMaker.addWebPageLinkToHrefList(careerNotiListAll[0], CAREERAPPEND[0])
 
+    # -------------------- 일반공지 병합 -------------------- #
+    # 일반공지 양이 너무 많아져서 2-3페이지로 분리됐으므로(...) 이를 한 개로 합쳐야 함
+    genNotiFinder.mergeGenNoti(genNotiListAll, [1, 2])
+
     # -------------------- 공지 내용 미리보기 만들기 -------------------- #
-    # genNotiListAll[GENWEB.index(DORM)].linkForFixImg = HOMEPAGE
+    genNotiListAll[GENWEB.index(GENERAL)].linkForFixImg = IMGPAGE
 
     for notiList in genNotiListAll:
         KauNotiMaker.extractContentsInsideLink(notiList, genNotiFinder)

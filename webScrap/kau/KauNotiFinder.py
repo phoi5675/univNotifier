@@ -43,6 +43,13 @@ class GenNotiFinder(NotiFinder):
             return ""
         return found[1].get_text()
 
+    def mergeGenNoti(self, notiListAll, indexAry):
+        for idx in indexAry:
+            while len(notiListAll[idx].extractedNotiList) > 0:
+                notiListAll[0].extractedNotiList.append(notiListAll[idx].extractedNotiList.pop())
+                notiListAll[idx].numOfNoti -= 1
+                notiListAll[0].numOfNoti += 1
+
 
 class DeptNotiFinder(NotiFinder):
     def __init__(self):
