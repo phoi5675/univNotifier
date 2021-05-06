@@ -6,6 +6,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import smtplib
+import time
 
 
 # 이메일 유효성 검사 함수
@@ -112,8 +113,7 @@ def sendMailFromWorksheet(worksheet, htmlDict, mailTitle, categoryKey, smtp):
             if htmlDict[index] != '':
                 # 메일 발송
                 send_mail(smtp, mailAddrList[i], mailTitle, htmlDict[index])
-
-
+                time.sleep(1)
         except KeyError:
             pass
         i += 1
