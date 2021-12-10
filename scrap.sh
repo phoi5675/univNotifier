@@ -1,4 +1,3 @@
-
-. /home/webScrap/venv/bin/activate
+source  /home/webScrap/venv/bin/activate
 python3 /home/webScrap/run.py
 exit
