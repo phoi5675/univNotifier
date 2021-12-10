@@ -12,18 +12,9 @@ venv 및 setup.py 가 존재해야 자매 폴더의 모듈 import 가능합니�
 개인 리눅스 서버의 cron 을 이용해서 파이썬 파일을 실행합니다
 # Requirements
 - python3 (2.7.x 에서는 unicode 오류 가능성 있음)
-- datetime
-- bs4 (Beautifulsoup)
-- gspread
-- oauth2client
-- email
-- smtplib
-- selenium
-- gecko driver
-- Firefox
-- time
-- ~~requests~~ (selenium 사용으로 deprecated)
-
+```shell
+pip3 install -r requirements.txt
+```
 # Sources
 - 웹 스크래핑
   - https://github.com/Space4all/kau-notify (kau.ac.kr 에서 board_id 를 이용하여 페이지 이동하는 부분)
