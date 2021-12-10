@@ -94,3 +94,6 @@ MIT License. For more information, see LICENSE.
   - 항공대 일반 공지에서 이미지 링크가 깨져서 미리보기가 정상적으로 나오지 않는 문제 수정
 - 21.5.6
   - gmail 분당 접근 제한 정책으로 인해 메일이 발송되지 않는 오류 수정
+- 21.12.10
+  - geckodriver 업데이트
+  - 로컬 우분투 서버 -> Docker container 설정 변경
