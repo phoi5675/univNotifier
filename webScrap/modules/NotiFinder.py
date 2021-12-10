@@ -4,7 +4,7 @@ from .ExtractedNoti import *
 from bs4 import BeautifulSoup
 from datetime import date
 from selenium import webdriver
-from selenium.webdriver import FirefoxOptions
+from selenium.webdriver.firefox.options import Options
 import time
 
 
@@ -130,9 +130,9 @@ class NotiFinder:
         # driver 를 이용하여 자바스크립트가 동적으로 페이지를 불러온 후에 웹 스크랩
 
         # driver = webdriver.Chrome("/Users/kangminjae/Downloads/chromedriver")
-        opts = FirefoxOptions()
-        opts.add_argument("--headless")
-        driver = webdriver.Firefox(firefox_options=opts, executable_path='/usr/local/bin/geckodriver')
+        opts = Options()
+        opts.headless = True
+        driver = webdriver.Firefox(options=opts, executable_path='/usr/bin/geckodriver')
 
         driver.get(webPage)
 
@@ -159,7 +159,7 @@ class NotiFinder:
             for notiLine in notiTable:
                 date = self.getDate(notiLine)
 
-                # if date == '2021-01-25':
+                # if date == '2021-04-02':
                 if NotiFinder.isToday(date):  # 오늘 날짜와 일치하는 공지만 추가
                     title = self.getTitle(notiLine)
                     # href 에는 게시물 id 만 포함
