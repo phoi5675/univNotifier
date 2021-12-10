@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 import copy
+import threading
 
 from webScrap.kau.const import *
 from webScrap.kau.KauNotiMaker import *
@@ -47,16 +48,16 @@ def main():
     genNotiFinder.webScrap(genNotiListAll, GENWEB, GENWEBDICT)
 
     # 취업 공지 스크랩
-    # careerNotiFinder.webScrap(careerNotiListAll, CAREER, GENWEBDICT)
+    careerNotiFinder.webScrap(careerNotiListAll, CAREER, GENWEBDICT)
 
     # 생활관 공지 스크랩
-    # dormNotiFinder.webScrap(dormNotiListAll, DORM, GENWEBDICT)
+    dormNotiFinder.webScrap(dormNotiListAll, DORM, GENWEBDICT)
 
     # 학과 공지 스크랩
-    # deptNotiFinder.webScrap(deptNotiListAll, DEPWEB, DEPWEBDICT)
+    deptNotiFinder.webScrap(deptNotiListAll, DEPWEB, DEPWEBDICT)
 
     # 공학융합 공지 스크랩
-    # smeNotiFinder.webScrap(smeNotiListAll, SMEWEB, GENWEBDICT)
+    smeNotiFinder.webScrap(smeNotiListAll, SMEWEB, GENWEBDICT)
 
     # -------------------- href 수정 -------------------- #
     # href 수정
