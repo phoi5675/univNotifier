@@ -29,6 +29,9 @@ pip3 install -r requirements.txt
 # License
 MIT License. For more information, see LICENSE.
 
+# Known problems
+- Windows docker 환경에서 docker의 메모리 과다 점유 문제가 있습니다. [여기](https://github.com/microsoft/WSL/issues/4166#issuecomment-526725261) 를 참고해서 해결 가능합니다.
+
 # Changelog
 - 20.07.10.
   - 항공대, 상명대 공지알리미에 쓰는 모듈 통합(modules 폴더 내의 파일)
