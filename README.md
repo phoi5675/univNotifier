@@ -10,6 +10,32 @@ venv 및 setup.py 가 존재해야 자매 폴더의 모듈 import 가능합니�
 
 
 개인 리눅스 서버의 cron 을 이용해서 파이썬 파일을 실행합니다
+# Setup
+## docker setup
+```shell
+docker build . -t scrapimg
+docker run -itd --name webscrap -v %cd%:/webScrap scrapimg
+```
+## setup cron
+```shell
+crontab -e
+```
+## etc
+아래의 쉘 스크립트를 이용하여,
+- CRLF -> LF 변환
+- geckodriver 설치
+
+를 진행합니다
+```shell
+sh additional_script.sh
+```
+를 이용하여, 아래의 코드를 추가합니다.
+```shell
+30 19 * * * python3 /webScrap/scrap.sh
+00 21 * * * python3 /webScrap/sendMail.sh
+```
+메일 스크랩, 발송 시간 기준에 맞춰 cron을 설정합니다.
+
 # Requirements
 - python3 (2.7.x 에서는 unicode 오류 가능성 있음)
 ```shell
