@@ -128,21 +128,20 @@ class NotiFinder:
             return html
 
         # driver 를 이용하여 자바스크립트가 동적으로 페이지를 불러온 후에 웹 스크랩
-
-        # driver = webdriver.Chrome("/Users/kangminjae/Downloads/chromedriver")
         opts = Options()
         opts.headless = True
+
+        # for release
         driver = webdriver.Firefox(options=opts, executable_path='/usr/bin/geckodriver')
+
+        # for debug
+        # driver = webdriver.Firefox(options=opts, executable_path=r'D:\docker\driver\geckodriver.exe')
 
         driver.get(webPage)
 
         time.sleep(3)  # 웹페이지를 받기 전에 텍스트를 받으면 로딩이 되지 않은 상태에서 받을 수 있음
 
         textHtml = driver.page_source
-
-        # requestedHtml = requests.get(webPage)
-        # textHtml = requestedHtml.text
-
         textHtml = removeBlank(textHtml)
 
         driver.quit()
