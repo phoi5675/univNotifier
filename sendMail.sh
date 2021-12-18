@@ -1,3 +1,2 @@
-. /home/webScrap/venv/bin/activate
-python3 /home/webScrap/sendmail.py
+python3 /webScrap/sendmail.py
 exit
