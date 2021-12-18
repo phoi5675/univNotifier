@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="15d461ea-ace5-4a54-a11b-2f2d595fc970" name="Default Changelist" comment="changed CRLF -&gt; LF">
-      <change beforePath="$PROJECT_DIR$/webScrap/kau/const.py" beforeDir="false" afterPath="$PROJECT_DIR$/webScrap/kau/const.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webScrap/smu/const.py" beforeDir="false" afterPath="$PROJECT_DIR$/webScrap/smu/const.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
