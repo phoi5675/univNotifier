@@ -153,3 +153,4 @@ const.py
 log.txt
 *.tar.gz
 .idea
+*.exe

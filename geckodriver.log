@@ -987,3 +987,21 @@ DevTools listening on ws://localhost:44225/devtools/browser/c48e84a8-4bba-4fab-a
 1639838978375	Marionette	INFO	Listening on port 43813
 1639838978482	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 1639838982852	Marionette	INFO	Stopped listening on port 43813
+1639842094452	geckodriver	INFO	Listening on 127.0.0.1:63419
+1639842097520	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-headless" "--remote-debugging-port" "63420" "-no-remote" "-profile" "C:\\Users\\phoi1\\AppData\\Local\\Temp\\rust_mozprofile3EwPBe"
+*** You are running in headless mode.
+1639842097776	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\phoi1\\AppData\\Local\\Temp\\rust_mozprofile3EwPBe\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:63420/devtools/browser/1cfa552a-b52e-46cc-969e-248776e5412e
+1639842098711	Marionette	INFO	Listening on port 63426
+1639842099079	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1639842104932	Marionette	INFO	Stopped listening on port 63426
+1639842105461	geckodriver	INFO	Listening on 127.0.0.1:63477
+1639842108536	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-headless" "--remote-debugging-port" "63478" "-no-remote" "-profile" "C:\\Users\\phoi1\\AppData\\Local\\Temp\\rust_mozprofiledCdMrM"
+*** You are running in headless mode.
+1639842108798	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\phoi1\\AppData\\Local\\Temp\\rust_mozprofiledCdMrM\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:63478/devtools/browser/de171f5c-53ef-469a-a5e9-abaacc76a296
+1639842109763	Marionette	INFO	Listening on port 63483
