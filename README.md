@@ -117,3 +117,5 @@ MIT License. For more information, see LICENSE.
 - 21.12.10
   - geckodriver 업데이트
   - 로컬 우분투 서버 -> Docker container 설정 변경
+- 21.12.18
+  - Docker bug fixes
