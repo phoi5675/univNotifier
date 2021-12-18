@@ -148,5 +148,8 @@ cython_debug/
 *.json
 const.py
 
-# ignore html files
+# ignore files; etc
 *.html
+log.txt
+*.tar.gz
+.idea
