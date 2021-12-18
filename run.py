@@ -1,4 +1,5 @@
 import threading
+import traceback
 
 
 if __name__ == '__main__':
@@ -18,7 +19,7 @@ if __name__ == '__main__':
         kau_thread = threading.Thread(target=KauScrapMain.main())
         kau_thread.start()
     except Exception as error:
-        saveError(error)
+        saveError(str(error) + traceback.format_exc())
     
     try:
         # 상명대학교 공지
@@ -27,4 +28,4 @@ if __name__ == '__main__':
         smu_thread.start()
 
     except Exception as error:
-        saveError(error)
+        saveError(str(error) + traceback.format_exc())
