@@ -104,7 +104,7 @@ HTMLBASE = '''
 # HTML 아래에 구독 신청 / 취소 등 정보를 위한 p 태그 및 신청 / 취소 링크
 SUBSCRIBELINK = "https://forms.gle/WwL3GB57zbRq5PWG6"
 UNSUBSCRIBELINK = "https://forms.gle/eHxyqZTD1HNA3u9SA"
-MEMOSTRING = "<b>사이트 리뉴얼 진행 중 이므로 일부 공지가 발송되지 않을 수 있습니다</b>"
+MEMOSTRING = ""
 MAILLINK = "phoinotifier@gmail.com"
 INFOTAG = '''
 <p>
@@ -118,21 +118,22 @@ INFOTAG = '''
 # -------------------- 파일 -------------------- #
 # 파일 경로 / 루트 폴더까지만 절대경로로 지정
 # 상대경로 사용 시 cron 및 파일 R/W 에서 IDE 실행 시에는 없던 오류가 발생할 가능성 있음
-FILEPATH = "/kau/"
+FILEPATH = "/home/webScrap/webScrap/kau/"
 # FILEPATH = "./webScrap/kau/"
 # -------------------- email 발송 -------------------- #
 # json 파일 이름
-JSON = '.json'
+JSON = 'web-scraper-275405-e8256b70a0ce.json'
 
 # 이메일 ID / PW
-SENDERID = "@gmail.com"
-SENDERPWD = ""
+SENDERID = "phoiNotifier@gmail.com"
+SENDERPWD = "!5Goo5746a6"
 
 # 스프레드시트 링크
-SPREADSHEETLINK = ""
+SPREADSHEETLINK = "https://https://docs.google.com/spreadsheets/d/1sX2eyYgBJta8y_p0ZMCvhTto6rjBOQZoOo3gStXtg3M/edit" \
+                  "#gid=534886396 "
 
 # 시트 이름
-SHEETNAME = ""
+SHEETNAME = "설문지 응답 시트1"
 
 # email 제목
 EMAILTITLE = "항공대학교 공지사항"
