@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="15d461ea-ace5-4a54-a11b-2f2d595fc970" name="Default Changelist" comment="changed CRLF -&gt; LF">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="15d461ea-ace5-4a54-a11b-2f2d595fc970" name="Default Changelist" comment="add traceback when logging">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additional_script.sh" beforeDir="false" afterPath="$PROJECT_DIR$/additional_script.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geckodriver.log" beforeDir="false" afterPath="$PROJECT_DIR$/geckodriver.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +130,35 @@
       <option name="project" value="LOCAL" />
       <updated>1639142473265</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="update gitignore">
+      <created>1639839587458</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1639839587458</updated>
+    </task>
+    <task id="LOCAL-00006" summary="update requirements.txt">
+      <created>1639839733838</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1639839733838</updated>
+    </task>
+    <task id="LOCAL-00007" summary="update debug method and gitignore">
+      <created>1639842179573</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1639842179573</updated>
+    </task>
+    <task id="LOCAL-00008" summary="add traceback when logging">
+      <created>1639842342651</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1639842342651</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -145,7 +176,11 @@
     <MESSAGE value="add gitignore" />
     <MESSAGE value="update gitignore and requirements.txt" />
     <MESSAGE value="changed CRLF -&gt; LF" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed CRLF -&gt; LF" />
+    <MESSAGE value="update gitignore" />
+    <MESSAGE value="update requirements.txt" />
+    <MESSAGE value="update debug method and gitignore" />
+    <MESSAGE value="add traceback when logging" />
+    <option name="LAST_COMMIT_MESSAGE" value="add traceback when logging" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

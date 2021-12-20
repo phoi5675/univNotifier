@@ -13,3 +13,13 @@ tar -xvzf geckodriver*
 chmod +x geckodriver
 
 mv ./geckodriver /usr/bin/
+
+# install firefox
+apt-get update
+apt-get install -y firefox
+
+# install python packages
+pip3 install --upgrade pip
+
+pip3 install pycairo PyGObject
+pip3 install -r requirements.txt
