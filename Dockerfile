@@ -1,5 +1,8 @@
 FROM ubuntu:20.04
 
+ENV TZ="Asia/Seoul"
+RUN date
+
 RUN sed -i 's/archive.ubuntu.com/mirror.kakao.com/g' /etc/apt/sources.list
 
 ARG DEBIAN_FRONTEND=noninteractive
