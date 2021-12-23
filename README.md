@@ -36,6 +36,11 @@ sh additional_script.sh
 ```
 메일 스크랩, 발송 시간 기준에 맞춰 cron을 설정합니다.
 
+cron service를 시작합니다.
+```shell
+service cron start
+```
+
 # Requirements
 - python3 (2.7.x 에서는 unicode 오류 가능성 있음)
 ```shell
