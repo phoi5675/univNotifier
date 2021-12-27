@@ -13,4 +13,6 @@ RUN apt-get install -y wget python3 python3-pip vim cron git-all
 
 RUN apt-get install -y  libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-3.0
 
+RUN service cron start
+
 ENTRYPOINT ["/bin/sh", "-c", "/bin/bash"]
