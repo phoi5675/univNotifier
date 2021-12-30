@@ -37,8 +37,8 @@ sh additional_script.sh
 ```
 를 이용하여, 아래의 코드를 추가합니다.
 ```shell
-30 19 * * * python3 /webScrap/scrap.sh
-00 21 * * * python3 /webScrap/sendMail.sh
+30 19 * * * sh /webScrap/scrap.sh
+00 21 * * * sh /webScrap/sendMail.sh
 ```
 메일 스크랩, 발송 시간 기준에 맞춰 cron을 설정합니다.
 
