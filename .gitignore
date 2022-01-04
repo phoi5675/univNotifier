@@ -150,7 +150,7 @@ const.py
 
 # ignore files; etc
 *.html
-*log*
+geckodriver.log
 *.tar.gz
-.idea
+.idea/
 *.exe
