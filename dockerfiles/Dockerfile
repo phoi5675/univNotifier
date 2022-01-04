@@ -16,7 +16,7 @@ RUN apt-get update
 
 RUN apt-get install -y \
 	libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-3.0 firefox \
-	wget python3 python3-pip vim cron git-all
+	wget python3 python3-pip vim cron git-all htop
 
 # Install python packages.
 RUN pip3 install --upgrade pip
