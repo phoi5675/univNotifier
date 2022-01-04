@@ -1,0 +1,2 @@
+30 19 * * * sh /webScrap/scripts/scrap.sh
+00 21 * * * sh /webScrap/scripts/sendMail.sh
