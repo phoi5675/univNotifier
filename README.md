@@ -14,7 +14,7 @@ docker build -f dockerfiles/Dockerfile -t scrapimg .
 ```
 run docker container
 ```shell
-docker run -itd --name webscrap \
+docker run -d --name webscrap \
     --restart=always \
     -v %cd%:/webScrap scrapimg
 ```

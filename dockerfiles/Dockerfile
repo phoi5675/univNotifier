@@ -16,11 +16,8 @@ RUN apt-get update
 
 RUN apt-get install -y \
 	libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-3.0 firefox \
-<<<<<<< HEAD
 	wget python3 python3-pip vim cron git-all htop
-=======
-	wget python3 python3-pip vim cron git-all
->>>>>>> 9d35d5e92d80387d99dafc061791228f0ac54741
+
 
 # Install python packages.
 RUN pip3 install --upgrade pip
@@ -49,4 +46,5 @@ RUN chmod +x geckodriver
 RUN mv ./geckodriver /usr/bin/
 RUN rm geckodriver*
 
-ENTRYPOINT ["/bin/sh", "-c", "/bin/bash"]
+CMD cron && tail -f /var/log/cron.log
+# ENTRYPOINT ["/bin/sh", "-c", "/bin/bash"]
