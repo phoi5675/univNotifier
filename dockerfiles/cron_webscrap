@@ -1,2 +1,4 @@
-30 19 * * * sh /webScrap/scripts/scrap.sh
-00 21 * * * sh /webScrap/scripts/sendMail.sh
+30 19 * * * root sh ${SCRAPDIR}/scripts/scrap.sh
+00 21 * * * root sh ${SCRAPDIR}/scripts/sendMail.sh
+* * * * * root echo $(date) >> /var/log/cron.log
+# Empty line
