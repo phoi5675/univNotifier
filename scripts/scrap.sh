@@ -3,7 +3,7 @@
 cron_log="/var/log/cron.log"
 
 # Change CRLF -> LF
-RUN sed -i -e 's/\r$//' ${SCRAPDIR}/*.*
+sed -i -e 's/\r$//' ${SCRAPDIR}/*.*
 
 # remove previous scraped files
 find ${SCRAPDIR}/ -type f -name "*.html" -exec rm {} \;
