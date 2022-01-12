@@ -25,6 +25,7 @@ RUN pip3 install pycairo PyGObject
 
 COPY ./requirements.txt /requirements.txt
 RUN pip3 install -r /requirements.txt
+RUN rm requirements.txt
 
 # Install geckodriver
 ADD https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux32.tar.gz \
@@ -37,6 +38,7 @@ RUN rm geckodriver*
 # Setup cron
 RUN apt-get install -y cron
 ENV SCRAPDIR="/webScrap"
+ENV CRON_LOG="/var/log/cron.log"
 ARG DOCKERFILES_DIR="dockerfiles"
 
 RUN touch /var/log/cron.log

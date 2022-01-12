@@ -1,7 +1,5 @@
 #!/bin/bash
 
-cronfile="/var/log/cron.log"
-
-echo $(date) : sending mail >> ${cronfile}
+echo $(date) : sending mail >> ${CRON_LOG}
 python3 ${SCRAPDIR}/sendmail.py
-echo $(date) : finished sending mail >> ${cronfile}
+echo $(date) : finished sending mail >> ${CRON_LOG}
