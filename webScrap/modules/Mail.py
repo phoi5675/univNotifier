@@ -27,7 +27,6 @@ def send_mail(smtp, addr: list, subj_layout, cont_layout, attachment=None):
         msg = MIMEMultipart('mixed')
     msg["From"] = smtp.user
     msg["To"] = smtp.user
-    msg["Bcc"] = addr
     msg["Subject"] = subj_layout
     # list 를 str 로 변환
     contents = ''
@@ -48,7 +47,8 @@ def send_mail(smtp, addr: list, subj_layout, cont_layout, attachment=None):
         msg.attach(file_data)
 
     # 메일 발송
-    smtp.sendmail(msg.as_string())
+    to_addr = [smtp.user] + addr
+    smtp.sendmail(smtp.user, to_addr, msg.as_string())
 
 
 def connectSmtp(senderId, senderPwd):
@@ -110,9 +110,9 @@ def sendMailFromWorksheet(worksheet, htmlDict, mailTitle, categoryKey, smtp):
         subscribers[index].append(mailAddrList[i])
     
     # 메일 발송
-    for key in categoryKey.keys():
-        if htmlDict[key] != '':
+    for key in categoryKey.values():
+        if htmlDict[key] != '' or len(subscribers[key]) > 0:
             try:
                 send_mail(smtp, subscribers[key], mailTitle, htmlDict[key])
-            except Exception:
-                print(Exception)
+            except Exception as error:
+                print(error)

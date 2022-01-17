@@ -2,11 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="15d461ea-ace5-4a54-a11b-2f2d595fc970" name="Default Changelist" comment="add traceback when logging">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/additional_script.sh" beforeDir="false" afterPath="$PROJECT_DIR$/additional_script.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/geckodriver.log" beforeDir="false" afterPath="$PROJECT_DIR$/geckodriver.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webScrap/modules/DeleteFile.py" beforeDir="false" afterPath="$PROJECT_DIR$/webScrap/modules/DeleteFile.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webScrap/modules/ExtractedNoti.py" beforeDir="false" afterPath="$PROJECT_DIR$/webScrap/modules/ExtractedNoti.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webScrap/modules/Mail.py" beforeDir="false" afterPath="$PROJECT_DIR$/webScrap/modules/Mail.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webScrap/modules/NotiFinder.py" beforeDir="false" afterPath="$PROJECT_DIR$/webScrap/modules/NotiFinder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webScrap/modules/NotiMaker.py" beforeDir="false" afterPath="$PROJECT_DIR$/webScrap/modules/NotiMaker.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +46,7 @@
       <recent name="$PROJECT_DIR$/webScrap/modules" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.run">
+  <component name="RunManager" selected="Python.sendMail">
     <configuration name="run" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="webScrap" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -88,8 +91,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.run" />
         <item itemvalue="Python.sendMail" />
+        <item itemvalue="Python.run" />
       </list>
     </recent_temporary>
   </component>
