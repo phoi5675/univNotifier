@@ -154,3 +154,6 @@ geckodriver.log
 *.tar.gz
 .idea/
 *.exe
+
+
+log.txt
