@@ -14,7 +14,7 @@ RUN export DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 
 RUN apt-get install -y \
-	libgirepository1.0-dev gcc libcairo2-dev pkg-config gir1.2-gtk-3.0 firefox \
+	apt-utils libgirepository1.0-dev gcc libcairo2-dev pkg-config gir1.2-gtk-3.0 firefox \
 	wget vim git-all htop
 
 # Install python packages.
