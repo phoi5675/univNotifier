@@ -24,7 +24,7 @@ docker run -d --name webscrap \
 ```shell
 docker run -d --name webscrap \
     --restart=always \
-    -v $(pwd)/webScrap:/webScrap scrapimg
+    -v $(pwd):/webScrap scrapimg
 ```
 
 # Requirements
