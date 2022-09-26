@@ -12,11 +12,19 @@ build docker image
 ```shell
 docker build -f dockerfiles/Dockerfile -t scrapimg .
 ```
-run docker container
+# Run container
+
+## Windows
 ```shell
 docker run -d --name webscrap \
     --restart=always \
     -v %cd%:/webScrap scrapimg
+```
+## Linux
+```shell
+docker run -d --name webscrap \
+    --restart=always \
+    -v ./webScrap scrapimg
 ```
 
 # Requirements
