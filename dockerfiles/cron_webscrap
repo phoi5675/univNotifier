@@ -1,2 +1,9 @@
-30 19 * * * sh /webScrap/scripts/scrap.sh
-00 21 * * * sh /webScrap/scripts/sendMail.sh
+30 19 * * * root set -a
+. /environ
+set +a
+sh ${SCRAPDIR}/scripts/scrap.sh
+00 21 * * * root set -a
+. /environ
+set +a
+sh ${SCRAPDIR}/scripts/sendMail.sh
+# Empty line

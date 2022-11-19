@@ -19,18 +19,14 @@ def is_valid(addr):
 
 
 # 이메일 발송 함수
-def send_mail(smtp, addr, subj_layout, cont_layout, attachment=None):
-    if not is_valid(addr):
-        print("Wrong email: " + addr)
-        return
-
+def send_mail(smtp, addr: list, subj_layout, cont_layout, attachment=None):
     # 텍스트 파일
     msg = MIMEMultipart("alternative")
     # 첨부파일이 있는 경우 mixed로 multipart 생성
     if attachment:
         msg = MIMEMultipart('mixed')
     msg["From"] = smtp.user
-    msg["To"] = addr
+    msg["To"] = smtp.user
     msg["Subject"] = subj_layout
     # list 를 str 로 변환
     contents = ''
@@ -51,7 +47,8 @@ def send_mail(smtp, addr, subj_layout, cont_layout, attachment=None):
         msg.attach(file_data)
 
     # 메일 발송
-    smtp.sendmail(smtp.user, addr, msg.as_string())
+    to_addr = [smtp.user] + addr
+    smtp.sendmail(smtp.user, to_addr, msg.as_string())
 
 
 def connectSmtp(senderId, senderPwd):
@@ -98,22 +95,24 @@ def sendMailFromWorksheet(worksheet, htmlDict, mailTitle, categoryKey, smtp):
     majList = worksheet.col_values(3)
     cancelSubscriptionList = worksheet.col_values(4)
 
-    i = 1  # 셀의 데이터는 2행부터 시작, list 라서 i 값은 1
-    while i < len(mailAddrList):
+    subscribers: dict = {key: [] for key in categoryKey.values()}
+    # 셀의 데이터는 2행부터 시작, list 라서 i 값은 1
+    for i in range(1, len(mailAddrList)):
         # 구독 취소 한 사람의 경우 루프 넘김
         if cancelSubscriptionList[i] == 'O':
-            i = i + 1
+            continue
+
+        if not is_valid(mailAddrList[i]):
+            print("Wrong email: " + mailAddrList[i])
             continue
         index = categoryKey[majList[i]]
 
-        # 파일이 존재하는 학과만 공지 발송
-        # 학교 공지가 없고, 학과 공지만 있을 때, 공지가 없는 학과가 생기는 경우
-        # 파일을 읽지 못하고 htmlDict 에 html 과 key 값이 저장 되지 않아 KeyError 발생 가능
-        try:
-            if htmlDict[index] != '':
-                # 메일 발송
-                send_mail(smtp, mailAddrList[i], mailTitle, htmlDict[index])
-                time.sleep(1)
-        except KeyError:
-            pass
-        i += 1
+        subscribers[index].append(mailAddrList[i])
+    
+    # 메일 발송
+    for key in categoryKey.values():
+        if htmlDict[key] != '' or len(subscribers[key]) > 0:
+            try:
+                send_mail(smtp, subscribers[key], mailTitle, htmlDict[key])
+            except Exception as error:
+                print(error)

@@ -1,9 +1,8 @@
 FROM ubuntu:20.04
 
-# Set timezone.
+# Set timezone to make run cron based on GMT+9.
 ENV TZ="Asia/Seoul"
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN date
 
 # Change apt list to mirror in Korea.
 RUN sed -i 's/archive.ubuntu.com/mirror.kakao.com/g' /etc/apt/sources.list
@@ -45,4 +44,25 @@ RUN chmod +x geckodriver
 RUN mv ./geckodriver /usr/bin/
 RUN rm geckodriver*
 
-ENTRYPOINT ["/bin/sh", "-c", "/bin/bash"]
+# Setup cron
+RUN apt-get install -y cron
+ENV SCRAPDIR="/webScrap"
+ENV CRON_LOG="/var/log/cron.log"
+ARG DOCKERFILES_DIR="dockerfiles"
+
+RUN touch /var/log/cron.log
+RUN chmod 644 /var/log/cron.log
+
+COPY $DOCKERFILES_DIR/cron_webscrap /etc/cron.d/cron_webscrap
+
+# Change CRLF -> LF
+RUN sed -i -e 's/\r$//' /etc/cron.d/cron_webscrap
+
+RUN chmod 0644 /etc/cron.d/cron_webscrap
+
+RUN crontab /etc/cron.d/cron_webscrap
+
+# Add entrypoint
+COPY $DOCKERFILES_DIR/entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
