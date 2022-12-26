@@ -8,3 +8,4 @@ chmod 0744 ${SCRAPDIR}/scripts/sendMail.sh
 
 # Run cron
 cron -f
+
