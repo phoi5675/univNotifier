@@ -4,4 +4,4 @@ docker rm webscrap
 # Recreate image.
 docker build --rm -f dockerfiles/Dockerfile --tag scrapimg .
 # Run dockeer container.
-docker run -d --restart=always -v $(pwd):/webscrap --name webscrap scrapimg 
+docker run -d --restart=always -v $(pwd):/webScrap --name webscrap scrapimg 
