@@ -66,6 +66,6 @@ RUN crontab /etc/cron.d/cron_webscrap
 COPY $DOCKERFILES_DIR/entrypoint.sh /entrypoint.sh
 
 # Fix permission for entrypoint.sh
-RUN chmod 0755 $DOCKERFILES_DIR/entrypoint.sh
+RUN chmod 0755 /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
