@@ -1,0 +1,33 @@
+@startuml webScrap 흐름
+mainframe webScrap 흐름도
+
+start
+
+repeat :학과 공지사항 스크랩;
+
+partition "학과 공지사항 스크랩" {
+    note left
+        고정 공지사항이 1페이지를 다 채우는 경우가 있어서,
+        5페이지 정도까지는 방문해야 함.
+    end note
+    repeat :해당 학과 페이지 방문;
+
+        :공지사항 테이블 추출;
+
+        if (공지사항 게시 일자 == 오늘?) then (yes) 
+            :오늘 공지사항 리스트에 삽입;
+        else (no) 
+            :nothing;
+        endif
+
+    repeat while(특정 페이지(e.g. 5p)까지 다 방문했는지?)
+}
+
+repeat while(모든 학과 다 방문했는지?)
+
+repeat :html 파일로 저장;
+    :학교 공통 공지사항(일반, 행사, 취업, ...)과 학과(경영, 기계, ...)
+    조합해서 각 학과 파일로 저장;
+repeat while (모든 학과 공지 리스트 조합 완료했는지?)
+stop
+@enduml
